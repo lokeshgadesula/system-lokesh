@@ -67,11 +67,21 @@ The site avoids a large WebGL/Three.js payload because the current concept can c
 
 ## Deploy to GitHub Pages
 
-Push to `main`. The workflow in `.github/workflows/deploy.yml` installs dependencies, builds the static export, and deploys `out/` to GitHub Pages. In the repository’s **Settings → Pages**, select **GitHub Actions** as the publishing source. The custom domain is `imlokesh.me`.
+The live site is [imlokesh.me](https://imlokesh.me/). GitHub Pages publishes the `docs/` directory on the `gh-pages` branch. The site is a static export from Next.js, and `.nojekyll` keeps its `_next` assets available.
 
-For a local production check:
+To publish changes, commit the source on `main`, build it, then copy the export to `gh-pages/docs`:
 
 ```bash
 npm ci
 npm run build
+touch out/.nojekyll
+git push origin main
+git switch gh-pages
+rsync -a --delete out/ docs/
+git add -A docs
+git commit -m "Update published portfolio"
+git push origin gh-pages
+git switch main
 ```
+
+GitHub's custom Actions workflow could not run while this account has a billing lock, so the repository currently uses branch publishing. The workflow remains available for manual use after the account issue is resolved; changing the Pages source to GitHub Actions would then enable automated deployment from `main`.
