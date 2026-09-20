@@ -36,7 +36,10 @@ export function Terminal() {
     status: () => "Applied AI ................. ACTIVE\nBackend Engineering ........ ACTIVE\nDistributed Systems ........ ACTIVE\nData Engineering ........... ACTIVE\nCloud Infrastructure ....... ACTIVE",
     uptime: () => `${portfolio.identity.experienceYears} years engineering runtime.`,
     coffee: () => "Dependency already installed.",
-    "sudo hire lokesh": () => "Permission granted.\nOpening communication channel...",
+    "sudo hire lokesh": () => {
+      window.location.href = `${portfolio.links.email}?subject=${encodeURIComponent("Let's work together")}`;
+      return "Permission granted.\nOpening your email app...";
+    },
     "rm -rf experience": () => "Operation rejected.\nProduction history is immutable.",
   }), []);
 
