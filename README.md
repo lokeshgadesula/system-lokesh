@@ -1,87 +1,75 @@
 # SYSTEM://LOKESH
 
-A production-oriented personal portfolio for **Lokeshprasanth Gadesula** designed as a distributed system that happens to be a portfolio.
+### Personal Portfolio of Lokeshprasanth Gadesula
 
-## Stack
+**Senior Software & Applied AI Engineer**
 
-- Next.js 16 App Router
-- React 19 + TypeScript
-- Tailwind CSS 4
-- Motion for React
-- Lucide React
-- SVG/CSS-based architecture visualizations (no heavy 3D runtime)
+[![Portfolio](https://img.shields.io/badge/Explore_Portfolio-imlokesh.me-00E5FF?style=for-the-badge&logo=googlechrome&logoColor=white)](https://imlokesh.me)
 
-## Run locally
+---
 
-```bash
-npm install
-npm run dev
-```
+## About Me
 
-Open `http://localhost:3000`.
+I am a Senior Software and Applied AI Engineer specializing in the intersection of **distributed systems, backend infrastructure, data engineering, and production AI**.
 
-## Production check
+With over six years of engineering experience, I build reliable backend platforms, large-scale data pipelines, LLM evaluation systems, and agentic workflows that solve real business problems.
 
-```bash
-npm run lint
-npm run build
-```
+My portfolio is designed as a distributed system rather than a conventional static website. It presents my experience, technical impact, projects, and engineering capabilities through an immersive system-inspired interface.
 
-## Content configuration
+## Engineering Focus
 
-Edit `portfolio.config.ts` to update:
+- **Applied AI & LLM Systems**  
+  LLM evaluation, hallucination detection, RAG, synthetic data generation, tool-calling agents, and production AI workflows.
 
-- identity and positioning
-- social/contact links
-- résumé link
-- navigation
-- impact metrics
-- engineering domains
-- work experience
-- technology graph evidence
-- featured projects
-- command palette items
-- target roles
+- **Backend & Platform Engineering**  
+  Resilient APIs, asynchronous services, distributed architectures, observability, and cloud-native platforms.
 
-The résumé link is intentionally centralized so you can replace `#resume` with the hosted PDF URL without touching components.
+- **Data & Streaming Infrastructure**  
+  High-throughput batch and streaming systems using Spark, Kafka, Airflow, AWS, and modern data platforms.
 
-## Signature interactions
+- **AI Inference & Optimization**  
+  Model serving, quantization, KV-cache optimization, TensorRT-LLM, vLLM, ONNX Runtime, and GPU-aware inference.
 
-- ~1.25s first-session boot sequence (skipped for reduced motion and repeat session visits)
-- animated production topology with traceable nodes
-- selectable system modules
-- one-shot impact metric animation
-- experience-as-system-build log
-- grouped technology/evidence map with traceable production context
-- architecture project explorer
-- Packet Router engineering mini-game
-- interactive portfolio terminal with Easter-egg commands
-- CMD/CTRL + K command palette with arrow-key navigation and Enter selection
-- Konami-code debug mode
-- desktop-only semantic custom cursor
-- contact handshake interaction
+## Portfolio Experience
 
-## Accessibility and performance choices
+This portfolio transforms my professional background into an interactive engineering system featuring:
 
-The site avoids a large WebGL/Three.js payload because the current concept can communicate infrastructure relationships with SVG and GPU-friendly transforms. It includes keyboard navigation, semantic sections, visible focus states, reduced-motion handling, descriptive diagram labels, mobile-specific simplification, and deferred interaction through client components.
+- Animated production topology
+- Traceable infrastructure nodes
+- Experience presented as system build logs
+- Technology and production-evidence graph
+- Interactive project architecture explorer
+- Engineering impact metrics
+- Packet Router mini-game
+- Interactive system terminal
+- Keyboard command palette
+- Hidden commands and debug modes
+- Contact handshake experience
 
-## Deploy to GitHub Pages
+## Technology Stack
 
-The live site is [imlokesh.me](https://imlokesh.me/). GitHub Pages publishes the `docs/` directory on the `gh-pages` branch. The site is a static export from Next.js, and `.nojekyll` keeps its `_next` assets available.
+`Python` · `TypeScript` · `JavaScript` · `Go` · `Java` · `C++`  
+`React` · `Next.js` · `FastAPI` · `Node.js` · `Spring Boot`  
+`AWS` · `Docker` · `Kubernetes` · `Terraform` · `GitHub Actions`  
+`Spark` · `Kafka` · `Airflow` · `PostgreSQL` · `Redis` · `Snowflake`  
+`PyTorch` · `Hugging Face` · `LangGraph` · `vLLM` · `TensorRT-LLM`
 
-To publish changes, commit the source on `main`, build it, then copy the export to `gh-pages/docs`:
+## Featured Engineering Areas
 
-```bash
-npm ci
-npm run build
-touch out/.nojekyll
-git push origin main
-git switch gh-pages
-rsync -a --delete out/ docs/
-git add -A docs
-git commit -m "Update published portfolio"
-git push origin gh-pages
-git switch main
-```
+- Distributed backend and cloud platforms
+- Production LLM evaluation systems
+- Agentic AI and tool-calling workflows
+- Hybrid RAG and retrieval infrastructure
+- Real-time streaming and data pipelines
+- AI inference performance optimization
+- Enterprise automation and document intelligence
 
-GitHub's custom Actions workflow could not run while this account has a billing lock, so the repository currently uses branch publishing. The workflow remains available for manual use after the account issue is resolved; changing the Pages source to GitHub Actions would then enable automated deployment from `main`.
+## Explore My Portfolio
+
+Visit **[imlokesh.me](https://imlokesh.me/)** to explore my engineering experience, production impact, technology stack, and featured projects.
+
+---
+
+<p align="center">
+  <strong>Engineered as a system. Presented as a portfolio.</strong>
+</p>
