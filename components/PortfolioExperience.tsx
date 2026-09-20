@@ -26,19 +26,7 @@ export function PortfolioExperience() {
   const [debug, setDebug] = useState(false);
 
   useEffect(() => {
-    if (reduceMotion) {
-      setBooting(false);
-      return;
-    }
-    const seen = sessionStorage.getItem("system-lokesh-booted");
-    if (seen) {
-      setBooting(false);
-      return;
-    }
-    const timer = window.setTimeout(() => {
-      sessionStorage.setItem("system-lokesh-booted", "1");
-      setBooting(false);
-    }, 1250);
+    const timer = window.setTimeout(() => setBooting(false), reduceMotion ? 0 : 3450);
     return () => window.clearTimeout(timer);
   }, [reduceMotion]);
 
