@@ -591,10 +591,10 @@ body::before {
 .hero {
   grid-template-columns: minmax(0, 1.08fr) minmax(430px, .92fr);
   gap: 68px;
-  min-height: auto;
-  padding-top: 126px;
-  padding-bottom: 78px;
-  align-items: start;
+  min-height: calc(100svh - 8px);
+  padding-top: 96px;
+  padding-bottom: 64px;
+  align-items: center;
 }
 .hero-grid { opacity: .72; }
 .hero-copy-wrap::before {
@@ -896,6 +896,150 @@ body::before {
 }
 
 @media (max-width: 360px) {
+  .site-nav { width: calc(100% - 12px); padding-inline: 10px; gap: 8px; }
+  .brand { font-size: 11px; letter-spacing: .05em; }
+  .nav-actions { gap: 5px; }
+  .cmd-button { display: none; }
   .hero h1 { font-size: clamp(28px,9.2vw,33px); letter-spacing: -.055em; }
   .hero-proof > div { grid-template-columns: 104px minmax(0,1fr); }
 }
+
+/* Readability pass: preserve the technical hierarchy without making visitors hunt for text. */
+:root {
+  --muted: #a8bac8;
+  --subtle: #8198aa;
+}
+
+.nav-links a,
+.hero-links a,
+.topology-status,
+.node-tooltip,
+.module-body small,
+.inspector-list li,
+.build-detail-head p,
+.achievement-list li p,
+.project-copy > p,
+.technical-notes p,
+.workload-card p,
+.terminal-body pre.output,
+.contact-links a,
+.handshake-node,
+.recruiter-hero p,
+.recruiter-panel ul,
+.recruiter-capabilities p,
+.recruiter-projects p,
+.identity-prompt > p,
+.palette-list button,
+.palette-list p {
+  color: #9aafbf;
+}
+
+.scroll-cue {
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 700;
+  text-shadow: 0 0 18px rgba(126, 231, 255, .38);
+}
+.scroll-cue svg { filter: drop-shadow(0 0 5px rgba(126, 231, 255, .42)); }
+
+.topology-foot,
+.node-index,
+.section-code,
+.module-index,
+.module-arrow,
+.build-meta,
+.build-tab small,
+.achievement-list li span,
+.tag-row span,
+.tech-group-title span,
+.tech-node small,
+.inspector-signal,
+.project-selector button span,
+.architecture-node span,
+.technical-notes div span,
+.route-options button span,
+.game-telemetry > div span,
+.game-telemetry p,
+.status-lines div,
+.status-objective > span,
+.target-roles > span,
+.terminal-titlebar,
+.terminal-titlebar i,
+.resume-loader-step-icon,
+.resume-loader-step-state,
+.identity-prompt label,
+.identity-skip,
+.palette-input,
+.palette-input button,
+.palette-list kbd,
+.palette-footer,
+.footer > div,
+.footer-region {
+  color: #7891a4;
+}
+
+.hero-specialties,
+.hero-substatement,
+.section-copy,
+.tech-inspector-copy,
+.trace-tree div,
+.status-objective strong,
+.target-roles b,
+.recruiter-contact p {
+  color: #91a7b7;
+}
+
+/* Compact headings stay small, but remain immediately legible. */
+.mono-muted { font-weight: 600; }
+.build-tab strong {
+  color: #c4d5e0;
+  font-size: 14px;
+  font-weight: 650;
+}
+.build-meta {
+  color: #9bb0bf;
+  font-size: 10px;
+  font-weight: 650;
+}
+.build-tab small {
+  color: #879fb0;
+  font-size: 9px;
+  font-weight: 600;
+}
+.tech-group-title span,
+.project-selector button span,
+.recruiter-panel small,
+.recruiter-projects small,
+.identity-prompt label {
+  color: #879fb0;
+  font-size: 9px;
+  font-weight: 650;
+}
+.tech-group-title strong {
+  color: #b5c7d3;
+  font-size: 10px;
+  font-weight: 650;
+}
+.recruiter-panel small,
+.recruiter-projects small,
+.identity-prompt label {
+  color: #a6bac8;
+  font-size: 9.5px;
+}
+
+.footer > div {
+  color: #a0b4c3;
+  font-size: 10px;
+  line-height: 1.55;
+}
+.footer strong {
+  color: #d5e5ee;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+.footer-region {
+  color: #8fa7b8;
+  font-size: 9px;
+  line-height: 1.5;
+}
+.visitor-counter > span + span::before { color: #6f8a9d; }

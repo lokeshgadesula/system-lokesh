@@ -40,7 +40,8 @@ html[data-theme="light"] .hero h1 span:last-child { color:#47667a; }
 html[data-theme="light"] .hero-specialties,html[data-theme="light"] .hero-substatement { color:#496276; }
 html[data-theme="light"] .hero-proof > div { background:#fff; }
 html[data-theme="light"] .hero-proof strong { color:#103d50; }
-html[data-theme="light"] .hero-proof span,html[data-theme="light"] .hero-links a,html[data-theme="light"] .scroll-cue { color:#526b7c; }
+html[data-theme="light"] .hero-proof span,html[data-theme="light"] .hero-links a { color:#526b7c; }
+html[data-theme="light"] .scroll-cue { color:#006c87; text-shadow:0 0 16px rgba(0,108,135,.18); }
 html[data-theme="light"] .hero-stack span { color:#3d6073; background:#fff; border-color:#c8d9e2; }
 html[data-theme="light"] .button-primary { background:#006c87; color:#fff; box-shadow:0 8px 24px rgba(0,108,135,.16); }
 html[data-theme="light"] .button-primary:hover { background:#005570; }
@@ -74,8 +75,8 @@ html[data-theme="light"] .metric strong { color:#113e52; }
 html[data-theme="light"] .metric span { color:#466276; }
 html[data-theme="light"] .build-rail::before { background:#b8ced9; }
 html[data-theme="light"] .build-tab { color:#466277; }
-html[data-theme="light"] .build-tab strong { color:#38596d; }
-html[data-theme="light"] .build-meta,html[data-theme="light"] .build-tab small { color:#5a7587; }
+html[data-theme="light"] .build-tab strong { color:#244b60; }
+html[data-theme="light"] .build-meta,html[data-theme="light"] .build-tab small { color:#49687b; }
 html[data-theme="light"] .build-tab.active strong { color:#142b3a; }
 html[data-theme="light"] .build-node { background:#fff; border-color:#87aebe; }
 html[data-theme="light"] .build-detail { background:#fff; border-color:#d0dee6; }
@@ -91,8 +92,8 @@ html[data-theme="light"] .graph-toolbar button.active { background:#006c87; colo
 html[data-theme="light"] .tech-map { background:linear-gradient(rgba(0,108,135,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,108,135,.02) 1px,transparent 1px),#fff; border-color:#ccdfe8; }
 html[data-theme="light"] .tech-map-head { background:#f1f7fa; }
 html[data-theme="light"] .tech-group { background:#fff; }
-html[data-theme="light"] .tech-group-title span,html[data-theme="light"] .tech-node small,html[data-theme="light"] .inspector-signal { color:#5d7789; }
-html[data-theme="light"] .tech-group-title strong { color:#305368; }
+html[data-theme="light"] .tech-group-title span,html[data-theme="light"] .tech-node small,html[data-theme="light"] .inspector-signal { color:#506f82; }
+html[data-theme="light"] .tech-group-title strong { color:#21495e; }
 html[data-theme="light"] .tech-group-title i { background:#c8dce5; }
 html[data-theme="light"] .tech-node { background:#f5f9fb; border-color:#d2e1e8; box-shadow:none; }
 html[data-theme="light"] .tech-node:hover,html[data-theme="light"] .tech-node.active { background:#e5f4f8; border-color:#78b5c8; }
@@ -103,7 +104,7 @@ html[data-theme="light"] .trace-tree div span { color:#25738a; }
 
 /* Projects, lab, and system status */
 html[data-theme="light"] .project-selector button { color:#496779; }
-html[data-theme="light"] .project-selector button span { color:#668597; }
+html[data-theme="light"] .project-selector button span { color:#49687b; }
 html[data-theme="light"] .project-console { background:#fff; border-color:#cbdde6; }
 html[data-theme="light"] .project-copy > p,html[data-theme="light"] .technical-notes p { color:#415e72; }
 html[data-theme="light"] .project-actions button,html[data-theme="light"] .project-actions a { color:#31566b; background:#fff; }
@@ -139,8 +140,10 @@ html[data-theme="light"] .contact-links a:hover { background:#edf7fa; color:#153
 html[data-theme="light"] .handshake-node i { background:#fff; border-color:#94b7c6; }
 html[data-theme="light"] .handshake-line { background:#bcd2dc; }
 html[data-theme="light"] .handshake-line b { background:#8fb4c2; }
-html[data-theme="light"] .footer > div { color:#567184; }
-html[data-theme="light"] .footer strong { color:#31566b; }
+html[data-theme="light"] .footer > div { color:#3e6074; }
+html[data-theme="light"] .footer strong { color:#173f54; }
+html[data-theme="light"] .footer-region { color:#4b6b7f; }
+html[data-theme="light"] .visitor-counter > span + span::before { color:#7895a5; }
 html[data-theme="light"] .recruiter-nav-button { color:#176b59; border-color:#9cc9bd; background:#f3fbf8; }
 html[data-theme="light"] .recruiter-mode { background:rgba(226,237,242,.9); }
 html[data-theme="light"] .recruiter-shell { background:linear-gradient(145deg,#fff,#eef5f8); border-color:#b8d3de; box-shadow:0 30px 100px rgba(35,78,100,.22); }
@@ -154,6 +157,7 @@ html[data-theme="light"] .recruiter-contact a { color:#31586c; background:#fff; 
 html[data-theme="light"] .identity-prompt { background:linear-gradient(145deg,#fff,#edf6f9); border-color:#9fc7d5; box-shadow:0 22px 70px rgba(35,78,100,.2); }
 html[data-theme="light"] .identity-prompt > strong { color:#183d50; }
 html[data-theme="light"] .identity-prompt > p { color:#506c7c; }
+html[data-theme="light"] .identity-prompt label,html[data-theme="light"] .recruiter-panel small,html[data-theme="light"] .recruiter-projects small { color:#365a6e; }
 html[data-theme="light"] .identity-prompt input { background:#fff; color:#173b4e; border-color:#c6dbe4; }
 html[data-theme="light"] .identity-prompt input[aria-invalid="true"] { border-color:#c75c32; }
 html[data-theme="light"] .identity-error { color:#a63d1d; }
