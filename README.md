@@ -90,7 +90,7 @@ Visible tabs send a heartbeat every 30 seconds. “LIVE” means a browser sessi
 4. Set custom server-only Edge Function secrets: `RESEND_API_KEY`, `PORTFOLIO_NOTIFICATION_EMAIL`, optional `PORTFOLIO_NOTIFICATION_FROM`, and `PORTFOLIO_ALLOWED_ORIGIN=https://imlokesh.me`. The function sends email through Resend and retains `PORTFOLIO_NOTIFICATION_WEBHOOK_URL` as an optional Slack-compatible fallback. Supabase automatically supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`; never copy the service-role key into frontend env files.
 5. Rebuild and deploy the static site so the two `NEXT_PUBLIC_` values are embedded at build time.
 
-The included notification adapter posts a Slack-compatible `text` payload. Replace only the `deliver` function to connect email, Discord, Telegram, or another provider. Secrets remain in Edge Function environment variables.
+The notification function sends email through Resend when `RESEND_API_KEY` and `PORTFOLIO_NOTIFICATION_EMAIL` are configured. A Slack-compatible webhook remains available as an optional fallback. All provider credentials remain in Edge Function environment variables.
 
 The repository does not ship a hidden admin route because GitHub Pages cannot securely authenticate a private dashboard. Use the authenticated Supabase dashboard/Table Editor for visitors today, live sessions, event totals, referrers, engaged sessions, and voluntarily identified visitors. A future private dashboard should authenticate through Supabase Auth and read through owner-only policies.
 
