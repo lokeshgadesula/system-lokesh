@@ -155,6 +155,8 @@ html[data-theme="light"] .identity-prompt { background:linear-gradient(145deg,#f
 html[data-theme="light"] .identity-prompt > strong { color:#183d50; }
 html[data-theme="light"] .identity-prompt > p { color:#506c7c; }
 html[data-theme="light"] .identity-prompt input { background:#fff; color:#173b4e; border-color:#c6dbe4; }
+html[data-theme="light"] .identity-prompt input[aria-invalid="true"] { border-color:#c75c32; }
+html[data-theme="light"] .identity-error { color:#a63d1d; }
 html[data-theme="light"] .visitor-online i { background:#11745a; }
 html[data-theme="light"] .palette { background:#fff; border-color:#a5c9d7; }
 html[data-theme="light"] .palette-input,html[data-theme="light"] .palette-input button,html[data-theme="light"] .palette-list button,html[data-theme="light"] .palette-list p,html[data-theme="light"] .palette-footer,html[data-theme="light"] .palette-list kbd { color:#49677b; }

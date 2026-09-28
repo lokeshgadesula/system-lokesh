@@ -24,7 +24,7 @@ export function RecruiterMode() {
       <div className="recruiter-shell">
         <header className="recruiter-head">
           <div><span className="eyebrow">RECRUITER MODE / HIRING BRIEF</span><strong>SYSTEM://LOKESH</strong></div>
-          <button type="button" onClick={closeRecruiterMode}><X size={16} /> Exit Recruiter Mode</button>
+          <button className="recruiter-close" type="button" onClick={closeRecruiterMode} aria-label="Exit Recruiter Mode"><X size={16} /><span>Exit Recruiter Mode</span></button>
         </header>
 
         <main className="recruiter-content">

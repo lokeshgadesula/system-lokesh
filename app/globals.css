@@ -414,6 +414,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .identity-prompt label { display:grid; gap:5px; color:#617989; font:8px var(--mono); letter-spacing:.05em; }
 .identity-prompt input { width:100%; border:1px solid var(--line); border-radius:7px; padding:10px; outline:none; background:rgba(255,255,255,.025); color:var(--text); }
 .identity-prompt input:focus { border-color:var(--cyan); }
+.identity-prompt input[aria-invalid="true"] { border-color:rgba(255,157,103,.72); }
+.identity-error { margin:1px 0 0; color:var(--warn); font:10px/1.45 var(--mono); }
 .identity-prompt form > div { display:flex; align-items:center; gap:10px; margin-top:3px; }
 .identity-skip { border:0; background:transparent; color:#708797; font:9px var(--mono); cursor:pointer; }
 
@@ -423,8 +425,10 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .recruiter-mode { padding:0; }
   .recruiter-shell { min-height:100vh; border:0; border-radius:0; }
   .recruiter-head { padding:12px 14px; }
-  .recruiter-head button { font-size:0; }
-  .recruiter-head button svg { width:18px; height:18px; }
+  .recruiter-head > div { min-width:0; }
+  .recruiter-close { flex:0 0 40px; width:40px; height:40px; min-height:40px; padding:0; justify-content:center; align-self:center; touch-action:manipulation; }
+  .recruiter-close span { display:none; }
+  .recruiter-close svg { flex:0 0 auto; width:18px; height:18px; }
   .recruiter-content { padding:28px 15px 40px; }
   .recruiter-hero,.recruiter-grid,.recruiter-contact { grid-template-columns:1fr; }
   .recruiter-actions { grid-template-columns:1fr 1fr; min-width:0; }
@@ -587,8 +591,10 @@ body::before {
 .hero {
   grid-template-columns: minmax(0, 1.08fr) minmax(430px, .92fr);
   gap: 68px;
-  min-height: 100svh;
+  min-height: auto;
   padding-top: 126px;
+  padding-bottom: 78px;
+  align-items: start;
 }
 .hero-grid { opacity: .72; }
 .hero-copy-wrap::before {
@@ -841,7 +847,7 @@ body::before {
 @media (max-width: 760px) {
   .section-shell { width: min(100% - 28px, 1220px); }
   .content-section { padding-top: 94px; }
-  .hero { padding-top: 116px; gap: 42px; }
+  .hero { padding-top: 116px; padding-bottom:64px; gap: 42px; }
   .hero h1 { font-size: clamp(35px, 10.7vw, 54px); }
   .hero-role { margin-top: 22px; }
   .hero-proof { grid-template-columns: 1fr; }
