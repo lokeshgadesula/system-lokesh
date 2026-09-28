@@ -5,12 +5,14 @@ import { ExternalLink, Github } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { SectionIntro } from "./SectionIntro";
+import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function ProjectLab() {
   const [active, setActive] = useState(0);
   const [mode, setMode] = useState<"architecture" | "details">("architecture");
   const reduceMotion = useReducedMotion();
   const project = portfolio.projects[active];
+  const { track } = useAnalytics();
 
   return (
     <section id="projects" className="section-shell content-section">
@@ -27,7 +29,7 @@ export function ProjectLab() {
             role="tab"
             aria-selected={active === index}
             className={active === index ? "active" : ""}
-            onClick={() => { setActive(index); setMode("architecture"); }}
+            onClick={() => { setActive(index); setMode("architecture"); track("project_viewed", { project: item.id }); }}
             data-cursor="OPEN"
           >
             <span>0{index + 1}</span>{item.title}
@@ -48,7 +50,7 @@ export function ProjectLab() {
           <div className="project-actions">
             <button className={mode === "architecture" ? "active" : ""} onClick={() => setMode("architecture")}>Architecture</button>
             <button className={mode === "details" ? "active" : ""} onClick={() => setMode("details")}>Technical Details</button>
-            <a href={project.github} target="_blank" rel="noreferrer"><Github size={15} /> GitHub <ExternalLink size={13} /></a>
+            <a href={project.github} target="_blank" rel="noreferrer" onClick={() => track("github_clicked", { source: "project", project: project.id })}><Github size={15} /> GitHub <ExternalLink size={13} /></a>
           </div>
         </div>
         <div className="project-visual" data-cursor="TRACE">

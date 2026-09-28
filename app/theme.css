@@ -141,6 +141,21 @@ html[data-theme="light"] .handshake-line { background:#bcd2dc; }
 html[data-theme="light"] .handshake-line b { background:#8fb4c2; }
 html[data-theme="light"] .footer > div { color:#567184; }
 html[data-theme="light"] .footer strong { color:#31566b; }
+html[data-theme="light"] .recruiter-nav-button { color:#176b59; border-color:#9cc9bd; background:#f3fbf8; }
+html[data-theme="light"] .recruiter-mode { background:rgba(226,237,242,.9); }
+html[data-theme="light"] .recruiter-shell { background:linear-gradient(145deg,#fff,#eef5f8); border-color:#b8d3de; box-shadow:0 30px 100px rgba(35,78,100,.22); }
+html[data-theme="light"] .recruiter-head { background:rgba(255,255,255,.94); }
+html[data-theme="light"] .recruiter-head strong,html[data-theme="light"] .recruiter-hero h3,html[data-theme="light"] .recruiter-panel h3,html[data-theme="light"] .recruiter-projects h3 { color:#254c60; }
+html[data-theme="light"] .recruiter-hero p,html[data-theme="light"] .recruiter-panel ul,html[data-theme="light"] .recruiter-capabilities p,html[data-theme="light"] .recruiter-projects p { color:#4c6879; }
+html[data-theme="light"] .recruiter-proof div,html[data-theme="light"] .recruiter-panel,html[data-theme="light"] .recruiter-projects { background:#fff; border-color:#cbdde6; }
+html[data-theme="light"] .recruiter-proof strong { color:#153e51; }
+html[data-theme="light"] .recruiter-contact { background:linear-gradient(120deg,#f1faf7,#edf7fa); border-color:#a6cfc4; }
+html[data-theme="light"] .recruiter-contact a { color:#31586c; background:#fff; }
+html[data-theme="light"] .identity-prompt { background:linear-gradient(145deg,#fff,#edf6f9); border-color:#9fc7d5; box-shadow:0 22px 70px rgba(35,78,100,.2); }
+html[data-theme="light"] .identity-prompt > strong { color:#183d50; }
+html[data-theme="light"] .identity-prompt > p { color:#506c7c; }
+html[data-theme="light"] .identity-prompt input { background:#fff; color:#173b4e; border-color:#c6dbe4; }
+html[data-theme="light"] .visitor-online i { background:#11745a; }
 html[data-theme="light"] .palette { background:#fff; border-color:#a5c9d7; }
 html[data-theme="light"] .palette-input,html[data-theme="light"] .palette-input button,html[data-theme="light"] .palette-list button,html[data-theme="light"] .palette-list p,html[data-theme="light"] .palette-footer,html[data-theme="light"] .palette-list kbd { color:#49677b; }
 html[data-theme="light"] .palette-list button:hover,html[data-theme="light"] .palette-list button.active { background:#e9f5f9; }

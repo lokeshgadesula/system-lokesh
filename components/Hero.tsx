@@ -1,12 +1,14 @@
 "use client";
 
-import { ArrowDownRight, FileText, Github, Linkedin, MoveRight } from "lucide-react";
+import { ArrowDownRight, FileText, Github, Linkedin, MoveRight, UserRoundSearch } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { HeroTopology } from "./HeroTopology";
+import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
+  const { openRecruiterMode, requestIdentity, track } = useAnalytics();
   return (
     <section className="hero section-shell" id="home" aria-labelledby="hero-title">
       <div className="hero-grid" />
@@ -43,16 +45,18 @@ export function Hero() {
               Explore My System <MoveRight size={17} />
             </a>
             <a className="button button-ghost" href="#projects" data-cursor="OPEN">View Engineering Work</a>
+            <button className="button button-ghost recruiter-hero-button" type="button" onClick={openRecruiterMode} data-cursor="OPEN"><UserRoundSearch size={16} /> Recruiter Mode</button>
           </div>
           <div className="hero-links" aria-label="Profile links">
             <a
               href={portfolio.links.resumeTerminal} target="_blank" rel="noopener noreferrer" data-cursor="CONNECT"
+              onClick={() => { track("resume_opened", { source: "hero" }); window.setTimeout(requestIdentity, 250); }}
             >
               <FileText size={15} />
               Resume
             </a>
-            <a href={portfolio.links.github} target="_blank" rel="noreferrer" data-cursor="CONNECT"><Github size={15} /> GitHub</a>
-            <a href={portfolio.links.linkedin} target="_blank" rel="noreferrer" data-cursor="CONNECT"><Linkedin size={15} /> LinkedIn</a>
+            <a href={portfolio.links.github} target="_blank" rel="noreferrer" data-cursor="CONNECT" onClick={() => track("github_clicked", { source: "hero" })}><Github size={15} /> GitHub</a>
+            <a href={portfolio.links.linkedin} target="_blank" rel="noreferrer" data-cursor="CONNECT" onClick={() => track("linkedin_clicked", { source: "hero" })}><Linkedin size={15} /> LinkedIn</a>
           </div>
         </motion.div>
       </div>

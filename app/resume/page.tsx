@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { portfolio } from "@/portfolio.config";
+import { startAnalytics, recordAnalytics } from "@/lib/analytics/session";
 
 const steps = [
   "Gathering the details",
@@ -14,12 +15,17 @@ export default function ResumePage() {
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
+    void startAnalytics().then((ready) => {
+      if (ready) void recordAnalytics("resume_opened", { source: "direct_route" }, "resume-route").then((accepted) => {
+        if (accepted) void recordAnalytics("engaged_visitor", { source: "resume" }, "engagement");
+      });
+    });
     const stepTimers = [750, 1500, 2250].map((delay, index) =>
       window.setTimeout(() => setActiveStep(index + 1), delay)
     );
     const redirectTimer = window.setTimeout(() => {
       window.location.assign(portfolio.links.resume);
-    }, 7000);
+    }, 10000);
 
     return () => {
       stepTimers.forEach(window.clearTimeout);

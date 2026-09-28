@@ -18,8 +18,15 @@ import { Footer } from "./Footer";
 import { CommandPalette } from "./CommandPalette";
 import { CustomCursor } from "./CustomCursor";
 import { DebugOverlay } from "./DebugOverlay";
+import { AnalyticsProvider } from "./analytics/AnalyticsProvider";
+import { VisitorIdentityPrompt } from "./analytics/VisitorIdentityPrompt";
+import { RecruiterMode } from "./RecruiterMode";
 
 export function PortfolioExperience() {
+  return <AnalyticsProvider><PortfolioShell /></AnalyticsProvider>;
+}
+
+function PortfolioShell() {
   const reduceMotion = useReducedMotion();
   const [booting, setBooting] = useState(true);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -66,6 +73,8 @@ export function PortfolioExperience() {
       <CustomCursor />
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
       <DebugOverlay enabled={debug} />
+      <RecruiterMode />
+      <VisitorIdentityPrompt />
       <AnimatePresence>{booting && <BootSequence />}</AnimatePresence>
       <motion.div
         initial={reduceMotion ? false : { opacity: 0 }}

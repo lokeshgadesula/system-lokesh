@@ -4,10 +4,12 @@ import { FormEvent, useMemo, useRef, useState } from "react";
 import { TerminalSquare } from "lucide-react";
 import { portfolio } from "@/portfolio.config";
 import { SectionIntro } from "./SectionIntro";
+import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 type Line = { type: "input" | "output"; text: string };
 
 export function Terminal() {
+  const { requestIdentity, track } = useAnalytics();
   const [value, setValue] = useState("");
   const [lines, setLines] = useState<Line[]>([
     { type: "output", text: "Portfolio shell ready. Type `help` to inspect available commands." },
@@ -25,7 +27,7 @@ export function Terminal() {
     backend: () => "Async APIs · REST/gRPC · distributed services · auth · database performance · observability.",
     data: () => "Kafka → Spark → Airflow → S3/Redshift with batch + streaming processing patterns.",
     contact: () => `Website: ${portfolio.links.website}\nGitHub: ${portfolio.links.github}\nLinkedIn: ${portfolio.links.linkedin}`,
-    resume: () => {window.open(portfolio.links.resumeTerminal, "_blank");
+    resume: () => {track("resume_opened", { source: "terminal" }); window.open(portfolio.links.resumeTerminal, "_blank"); window.setTimeout(requestIdentity, 250);
   return [
     "Locating candidate artifact...",
     "RESUME.pdf ............... FOUND",
@@ -37,11 +39,13 @@ export function Terminal() {
     uptime: () => `${portfolio.identity.experienceYears} years engineering runtime.`,
     coffee: () => "Dependency already installed.",
     "sudo hire lokesh": () => {
+      track("contact_clicked", { channel: "email", source: "terminal" });
+      requestIdentity();
       window.location.href = `${portfolio.links.email}?subject=${encodeURIComponent("Let's work together")}`;
       return "Permission granted.\nOpening your email app...";
     },
     "rm -rf experience": () => "Operation rejected.\nProduction history is immutable.",
-  }), []);
+  }), [requestIdentity, track]);
 
   function submit(event: FormEvent) {
     event.preventDefault();

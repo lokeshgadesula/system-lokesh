@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Command, Menu, Moon, Sun, X } from "lucide-react";
+import { Command, Menu, Moon, Sun, UserRoundSearch, X } from "lucide-react";
 import { portfolio } from "@/portfolio.config";
+import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
+  const { openRecruiterMode } = useAnalytics();
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("overview");
@@ -60,6 +62,9 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
         ))}
       </nav>
       <div className="nav-actions">
+        <button className="recruiter-nav-button" type="button" onClick={openRecruiterMode} aria-label="Open Recruiter Mode">
+          <UserRoundSearch size={15} /><span>RECRUITER</span>
+        </button>
         <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label="Toggle light and dark theme" title="Toggle light and dark theme">
           <Sun className="theme-icon-light" size={15} aria-hidden="true" />
           <Moon className="theme-icon-dark" size={15} aria-hidden="true" />
@@ -75,6 +80,7 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
       </div>
       {open && (
         <div className="mobile-nav">
+          <button onClick={() => { setOpen(false); openRecruiterMode(); }}>👋 Recruiter Mode</button>
           {portfolio.nav.map((item) => (
             <a key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</a>
           ))}
