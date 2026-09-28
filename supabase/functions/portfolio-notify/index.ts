@@ -4,10 +4,25 @@ import { corsForOrigin } from "./cors.ts";
 type Notification = { title: string; lines: string[] };
 // Escape visitor-controlled Slack markup, including mention/link syntax.
 const plain = (value: string) => value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/[\r\n]/g," ").slice(0,500);
-async function deliver(webhook: string, notification: Notification) {
+async function deliverWebhook(webhook: string, notification: Notification) {
   const response = await fetch(webhook, {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text: `${notification.title}\n${notification.lines.join("\n")}`, mrkdwn: false }),
+    signal: AbortSignal.timeout(8000),
+    redirect: "error",
+  });
+  if (!response.ok) throw new Error("Notification delivery failed");
+}
+
+async function deliverEmail(apiKey: string, to: string, from: string, notification: Notification, idempotencyKey: string) {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "Idempotency-Key": idempotencyKey,
+    },
+    body: JSON.stringify({ from, to: [to], subject: notification.title, text: notification.lines.join("\n") }),
     signal: AbortSignal.timeout(8000),
     redirect: "error",
   });
@@ -44,9 +59,13 @@ Deno.serve(async (request: Request) => {
     try { body = JSON.parse(new TextDecoder().decode(bytes)); } catch { return reply({error:"Invalid JSON"},400); }
     if (!body || typeof body !== "object" || !("sessionId" in body) || typeof body.sessionId !== "string"
       || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.sessionId)) return reply({error:"Invalid request"},400);
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    const notificationEmail = Deno.env.get("PORTFOLIO_NOTIFICATION_EMAIL");
+    const notificationFrom = Deno.env.get("PORTFOLIO_NOTIFICATION_FROM") ?? "Portfolio Alerts <onboarding@resend.dev>";
     const webhook = Deno.env.get("PORTFOLIO_NOTIFICATION_WEBHOOK_URL");
-    if (!webhook) return reply({delivered:false});
-    if (new URL(webhook).protocol !== "https:") return reply({delivered:false},503);
+    const emailConfigured = Boolean(resendKey && notificationEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(notificationEmail!) && notificationEmail!.length <= 254);
+    const webhookConfigured = Boolean(webhook && new URL(webhook).protocol === "https:");
+    if (!emailConfigured && !webhookConfigured) return reply({delivered:false});
     const client = createClient(Deno.env.get("SUPABASE_URL")!,Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,{auth:{persistSession:false}});
     const [{data:session,error:sessionError},{data:events,error:eventsError},{data:identity,error:identityError}] = await Promise.all([
       client.from("portfolio_sessions").select("started_at,last_seen_at,referrer,utm_source,returning_session").eq("id",body.sessionId).maybeSingle(),
@@ -68,7 +87,7 @@ Deno.serve(async (request: Request) => {
     }
     const eventNames = (events ?? []).map((event: {event_type:string}) => event.event_type);
     const duration = Math.max(0,Math.round((new Date(session.last_seen_at).getTime()-new Date(session.started_at).getTime())/1000));
-    await deliver(webhook,{
+    const notification = {
       title:identified ? "👋 Recruiter / Visitor Identified" : "🔥 Engaged Portfolio Visitor",
       lines:[
         ...(identified && details?.name ? [`Name: ${plain(details.name)}`] : []),
@@ -80,8 +99,13 @@ Deno.serve(async (request: Request) => {
         `Resume opened: ${eventNames.includes("resume_opened") ? "Yes" : "No"}`,
         `Returning session: ${session.returning_session ? "Yes" : "No"}`,
       ],
-    });
-    return reply({delivered:true});
+    };
+    if (emailConfigured) {
+      await deliverEmail(resendKey!,notificationEmail!,notificationFrom,notification,`portfolio/${body.sessionId}/${kind}`);
+      return reply({delivered:true,provider:"email"});
+    }
+    await deliverWebhook(webhook!,notification);
+    return reply({delivered:true,provider:"webhook"});
   } catch {
     // Keep the dispatch claim on failure: a timed-out webhook may already have delivered.
     // No automatic retry can flood the owner or duplicate an ambiguous delivery.
