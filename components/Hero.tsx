@@ -28,6 +28,14 @@ export function Hero() {
           <p className="hero-statement">{portfolio.identity.statement}</p>
           <p className="hero-substatement">{portfolio.identity.alternateStatements[0]}</p>
 
+          <figure className="hero-philosophy philosophy-card">
+            <span className="philosophy-card-label">// ENGINEERING PHILOSOPHY</span>
+            <blockquote>
+              <span>I don&apos;t just use intelligent systems.</span>
+              <span>I build, test, break, and improve them.</span>
+            </blockquote>
+          </figure>
+
           <div className="hero-proof" aria-label="Selected engineering impact">
             {portfolio.identity.proof.map((item) => (
               <div key={item.label}>

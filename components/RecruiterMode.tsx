@@ -17,8 +17,6 @@ export function RecruiterMode() {
   }, [closeRecruiterMode, recruiterMode]);
   if (!recruiterMode) return null;
 
-  const leadExperience = portfolio.experience.slice(0, 2);
-
   return (
     <div className="recruiter-mode" role="dialog" aria-modal="true" aria-labelledby="recruiter-title">
       <div className="recruiter-shell">
@@ -47,8 +45,8 @@ export function RecruiterMode() {
 
           <section className="recruiter-grid">
             <div className="recruiter-panel">
-              <span className="eyebrow">STRONGEST EXPERIENCE</span>
-              {leadExperience.map((item) => (
+              <span className="eyebrow">PROFESSIONAL EXPERIENCE</span>
+              {portfolio.experience.map((item) => (
                 <article key={item.build}>
                   <small>{item.dates} / {item.company}</small>
                   <h3>{item.role}</h3>
@@ -65,6 +63,13 @@ export function RecruiterMode() {
                   <div className="tag-row">{module.items.slice(0, 5).map((item) => <span key={item}>{item}</span>)}</div>
                 </article>
               ))}
+              <figure className="recruiter-philosophy philosophy-card">
+                <span className="philosophy-card-label">// ENGINEERING PHILOSOPHY</span>
+                <blockquote>
+                  <span>It always seems impossible until it&apos;s done.</span>
+                </blockquote>
+                <figcaption>— LOKESHPRASANTH GADESULA</figcaption>
+              </figure>
             </div>
           </section>
 

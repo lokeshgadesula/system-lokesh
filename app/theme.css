@@ -152,6 +152,10 @@ html[data-theme="light"] .recruiter-head strong,html[data-theme="light"] .recrui
 html[data-theme="light"] .recruiter-hero p,html[data-theme="light"] .recruiter-panel ul,html[data-theme="light"] .recruiter-capabilities p,html[data-theme="light"] .recruiter-projects p { color:#4c6879; }
 html[data-theme="light"] .recruiter-proof div,html[data-theme="light"] .recruiter-panel,html[data-theme="light"] .recruiter-projects { background:#fff; border-color:#cbdde6; }
 html[data-theme="light"] .recruiter-proof strong { color:#153e51; }
+html[data-theme="light"] .philosophy-card { background:linear-gradient(145deg,#f3fbfd,#f7f5ff); border-color:#bed9e4; }
+html[data-theme="light"] .philosophy-card::before { color:rgba(0,108,135,.12); }
+html[data-theme="light"] .philosophy-card blockquote { color:#173f54; }
+html[data-theme="light"] .philosophy-card figcaption { color:#4d6c7f; }
 html[data-theme="light"] .recruiter-contact { background:linear-gradient(120deg,#f1faf7,#edf7fa); border-color:#a6cfc4; }
 html[data-theme="light"] .recruiter-contact a { color:#31586c; background:#fff; }
 html[data-theme="light"] .identity-prompt { background:linear-gradient(145deg,#fff,#edf6f9); border-color:#9fc7d5; box-shadow:0 22px 70px rgba(35,78,100,.2); }
