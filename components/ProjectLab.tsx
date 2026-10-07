@@ -26,13 +26,22 @@ export function ProjectLab() {
         {portfolio.projects.map((item, index) => (
           <button
             key={item.id}
+            type="button"
             role="tab"
             aria-selected={active === index}
             className={active === index ? "active" : ""}
             onClick={() => { setActive(index); setMode("architecture"); track("project_viewed", { project: item.id }); }}
             data-cursor="OPEN"
           >
-            <span>0{index + 1}</span>{item.title}
+            {active === index && (
+              <motion.i
+                className="project-selector-indicator"
+                layoutId="project-selector-indicator"
+                transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }}
+              />
+            )}
+            <span>0{index + 1}</span>
+            <strong>{item.title}</strong>
           </button>
         ))}
       </div>

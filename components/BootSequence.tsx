@@ -12,11 +12,11 @@ export function BootSequence() {
       exit={{ opacity: 0, filter: "blur(8px)" }}
       transition={{ duration: 0.35 }}
       role="status"
-      aria-label="Initializing portfolio system"
+      aria-label="Preparing portfolio systems for your arrival"
     >
       <div className="boot-panel">
         <p className="eyebrow">SYSTEM://LOKESH</p>
-        <p className="boot-copy">Initializing distributed runtime...</p>
+        <p className="boot-copy">Preparing my systems for your arrival…</p>
         <div className="boot-services" aria-hidden="true">
           {services.map((service, index) => (
             <motion.div

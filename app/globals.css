@@ -227,10 +227,14 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .trace-tree p { margin:0; }
 
 /* Project Lab */
-.project-selector { display:flex; gap:0; margin-left:96px; border-bottom:1px solid var(--line); }
-.project-selector button { flex:1; text-align:left; background:transparent; border:0; border-bottom:2px solid transparent; padding:12px 8px 14px; color:#6d8191; font-size:11px; cursor:pointer; }
-.project-selector button span { font-family:var(--mono); font-size:8px; color:#405666; margin-right:8px; }
-.project-selector button.active { color:var(--text); border-bottom-color:var(--cyan); }
+.project-selector { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px; margin:0 0 10px 96px; padding:4px; border:1px solid var(--line); border-radius:12px; background:rgba(4,11,17,.58); }
+.project-selector button { position:relative; isolation:isolate; display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:9px; min-height:52px; text-align:left; background:transparent; border:0; border-radius:8px; padding:10px 12px; color:#6d8191; cursor:pointer; overflow:hidden; }
+.project-selector button > span,.project-selector button > strong { position:relative; z-index:1; }
+.project-selector button span { font-family:var(--mono); font-size:8px; color:#587082; }
+.project-selector button strong { font-size:10.5px; line-height:1.35; font-weight:650; }
+.project-selector button.active { color:var(--text); }
+.project-selector button.active span { color:var(--cyan); }
+.project-selector-indicator { position:absolute; inset:0; z-index:0; border:1px solid rgba(126,231,255,.22); border-radius:8px; background:linear-gradient(135deg,rgba(126,231,255,.1),rgba(126,231,255,.035)); box-shadow:0 8px 24px rgba(0,0,0,.12); pointer-events:none; }
 .project-console { display:grid; grid-template-columns:.9fr 1.1fr; min-height:560px; border:1px solid var(--line); border-radius:0 0 16px 16px; background:rgba(7,15,23,.72); overflow:hidden; }
 .project-copy { padding:30px; border-right:1px solid var(--line); }
 .project-copy h3 { font-size:clamp(28px,3vw,42px); letter-spacing:-.045em; line-height:1.05; margin:9px 0 16px; }
@@ -278,7 +282,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .game-complete p { color:var(--muted); margin:0 0 12px; }
 
 /* Status */
-.status-section { padding:90px 0 20px; }
+.status-section { padding:72px 0 0; }
 .status-console { display:grid; grid-template-columns:1fr 1fr; gap:32px 60px; border:1px solid var(--line); border-radius:16px; padding:30px; background:linear-gradient(135deg,rgba(8,20,30,.78),rgba(7,13,20,.65)); }
 .status-console h2 { font-size:34px; margin:8px 0 0; letter-spacing:-.035em; }
 .status-lines { display:grid; align-content:center; }
@@ -360,7 +364,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 @keyframes pulse { 0% { transform:scale(.4); opacity:.2; } 100% { transform:scale(1); opacity:1; } }
 
 /* Footer */
-.footer { margin-top:110px; padding:24px 0 34px; border-top:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+.footer { margin-top:72px; padding:24px 0 34px; border-top:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
 .footer > div { display:grid; align-content:start; gap:5px; font-family:var(--mono); font-size:8px; color:#4f6474; }
 .footer > div:nth-child(2) { text-align:center; }
 .footer > div:nth-child(3) { text-align:right; }
@@ -534,7 +538,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .universe-destination:nth-of-type(even) .destination-planet { color:#c4b8ff; border-color:rgba(182,164,255,.34); background:radial-gradient(circle at 35% 30%,#3a315e,#111024 70%); }
 .universe-destination > span:last-child { display:grid; gap:3px; }
 .universe-destination strong { color:#c8dbe6; font-size:9.5px; white-space:nowrap; }
-.universe-destination small { color:#7f99aa; font:7px var(--mono); letter-spacing:.08em; white-space:nowrap; }
+.universe-destination small { color:#a8c0cf; font:700 8.5px/1.25 var(--mono); letter-spacing:.065em; white-space:nowrap; text-shadow:0 0 12px rgba(126,231,255,.16); }
 .universe-destination.active strong { color:#fff; }
 .universe-ship {
   position:absolute; z-index:4; transform:translate(-50%,-50%) rotate(43deg); width:42px; height:42px; display:grid; place-items:center;
@@ -638,7 +642,19 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .game-status span { display:flex; align-items:center; gap:6px; color:#9fb8c7; font:650 7px var(--mono); letter-spacing:.08em; }
 .game-status span i { width:6px; height:6px; border-radius:50%; background:#8af7cf; box-shadow:0 0 10px rgba(138,247,207,.5); }
 .game-status p { margin:0; color:#a9bfcc; font-size:10px; }.game-status small { color:#60798b; font:7px var(--mono); }
-.game-controls { align-items:center; justify-content:space-between; }
+.game-controls {
+  align-items:center; justify-content:space-between;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.game-controls *,
+.game-controls button {
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.game-controls button { touch-action:none; }
 .direction-pad { display:flex; gap:6px; }.game-controls > button { width:auto; padding:0 13px; gap:7px; font:650 8px var(--mono); }
 .game-controls .boost-control { color:#d8ccff; border-color:rgba(182,164,255,.26); background:rgba(182,164,255,.055); }
 .game-controls .restart-control { margin-left:auto; }
@@ -678,7 +694,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .universe-destination { min-width:96px; gap:5px; padding:3px; }
   .destination-planet { width:31px; height:31px; }
   .universe-destination strong { font-size:7.5px; }
-  .universe-destination small { font-size:5.8px; }
+  .universe-destination small { font-size:7px; letter-spacing:.045em; }
   .universe-ship { width:36px; height:36px; }
   .universe-controls { padding-top:8px; }
   .universe-controls button { width:44px; height:38px; }
@@ -819,8 +835,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
   .tech-node { min-width:66px; padding:6px 7px; }
   .tech-node span { font-size:8px; }
   .tech-node small { display:none; }
-  .project-selector { overflow-x:auto; }
-  .project-selector button { min-width:240px; }
+  .project-selector { grid-template-columns:1fr; overflow:visible; }
+  .project-selector button { min-width:0; }
   .project-copy { padding:22px; }
   .project-visual { min-height:460px; padding:18px; }
   .game-console { border-right:0; border-bottom:1px solid var(--line); padding:18px; }
@@ -872,7 +888,7 @@ body::before {
 }
 
 .section-shell { width: min(1220px, calc(100% - 56px)); }
-.content-section { padding-top: 132px; }
+.content-section { padding: 80px 0 0; scroll-margin-top: 0; }
 
 .site-nav {
   width: min(1220px, calc(100% - 36px));
@@ -1019,7 +1035,7 @@ body::before {
 .flow-step span { border-color: rgba(126,231,255,.18); }
 .inspector-list li { font-size: 12.5px; color: #8da1b1; }
 
-.metrics-section { padding-top: 82px; }
+.metrics-section { padding-top: 72px; }
 .metrics-head .mono-muted { color: #c6d8e6; }
 .metrics-head .eyebrow { color: #b7f2ff; }
 .metrics-grid {
@@ -1144,8 +1160,11 @@ body::before {
 
 @media (max-width: 760px) {
   .section-shell { width: min(100% - 28px, 1220px); }
-  .content-section { padding-top: 94px; }
-  .hero { padding-top: 116px; padding-bottom:64px; gap: 42px; }
+  .content-section { padding-top: 76px; }
+  .metrics-section { padding-top: 64px; }
+  .status-section { padding-top: 64px; }
+  .footer { margin-top: 64px; }
+  .hero { padding-top: 116px; padding-bottom:32px; gap: 42px; }
   .hero h1 { font-size: clamp(35px, 10.7vw, 54px); }
   .hero-role { margin-top: 22px; }
   .hero-philosophy {

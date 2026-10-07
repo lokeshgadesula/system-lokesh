@@ -247,7 +247,7 @@ export function UniverseMode() {
             </div>
 
             <div className="game-status" aria-live="polite"><span><i /> MISSION LOG</span><p>{status}</p><small>POS {Math.round(hudPosition.x)}:{Math.round(hudPosition.y)}</small></div>
-            <div className="universe-controls game-controls" aria-label="Touch ship controls">
+            <div className="universe-controls game-controls" aria-label="Touch ship controls" onContextMenu={(event) => event.preventDefault()}>
               <div className="direction-pad">
                 <button type="button" onPointerDown={() => holdControl("arrowup")} onPointerUp={() => releaseControl("arrowup")} onPointerCancel={() => releaseControl("arrowup")} onPointerLeave={() => releaseControl("arrowup")} aria-label="Thrust up"><ArrowUp size={18} /></button>
                 <button type="button" onPointerDown={() => holdControl("arrowleft")} onPointerUp={() => releaseControl("arrowleft")} onPointerCancel={() => releaseControl("arrowleft")} onPointerLeave={() => releaseControl("arrowleft")} aria-label="Thrust left"><ArrowLeft size={18} /></button>

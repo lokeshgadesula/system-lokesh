@@ -107,8 +107,12 @@ html[data-theme="light"] .tech-inspector-copy,html[data-theme="light"] .trace-tr
 html[data-theme="light"] .trace-tree div span { color:#25738a; }
 
 /* Projects, lab, and system status */
+html[data-theme="light"] .project-selector { background:#f1f7fa; border-color:#cbdde6; }
 html[data-theme="light"] .project-selector button { color:#496779; }
 html[data-theme="light"] .project-selector button span { color:#49687b; }
+html[data-theme="light"] .project-selector button.active { color:#163f54; }
+html[data-theme="light"] .project-selector button.active span { color:#006c87; }
+html[data-theme="light"] .project-selector-indicator { background:linear-gradient(135deg,#fff,#e9f6f9); border-color:#91c3d1; box-shadow:0 5px 16px rgba(21,73,92,.08); }
 html[data-theme="light"] .project-console { background:#fff; border-color:#cbdde6; }
 html[data-theme="light"] .project-copy > p,html[data-theme="light"] .technical-notes p { color:#415e72; }
 html[data-theme="light"] .project-actions button,html[data-theme="light"] .project-actions a { color:#31566b; background:#fff; }
@@ -261,7 +265,7 @@ html[data-theme="light"] .universe-destination.active .destination-planet {
   box-shadow:0 0 0 5px rgba(0,108,135,.08),0 9px 26px rgba(35,78,100,.18);
 }
 html[data-theme="light"] .universe-destination strong { color:#244b60; }
-html[data-theme="light"] .universe-destination small { color:#5b798c; }
+html[data-theme="light"] .universe-destination small { color:#365d71; text-shadow:none; }
 html[data-theme="light"] .universe-destination.active strong { color:#082f42; }
 html[data-theme="light"] .universe-ship {
   color:#08755a;
