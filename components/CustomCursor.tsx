@@ -11,6 +11,8 @@ export function CustomCursor() {
   useEffect(() => {
     const media = window.matchMedia("(pointer: fine)");
     const active = media.matches && !reduceMotion;
+    // Pointer capability is an external browser signal synchronized after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEnabled(active);
     document.documentElement.classList.toggle("has-custom-cursor", active);
 

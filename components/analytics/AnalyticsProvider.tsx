@@ -10,9 +10,12 @@ type AnalyticsContextValue = {
   enabled: boolean;
   stats: VisitorStats;
   recruiterMode: boolean;
+  universeMode: boolean;
   identityPromptOpen: boolean;
   openRecruiterMode: () => void;
   closeRecruiterMode: () => void;
+  openUniverseMode: () => void;
+  closeUniverseMode: () => void;
   requestIdentity: () => void;
   dismissIdentity: () => void;
   identify: (identity: VisitorIdentity) => Promise<void>;
@@ -25,6 +28,7 @@ const AnalyticsContext = createContext<AnalyticsContextValue | null>(null);
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<VisitorStats>(emptyStats);
   const [recruiterMode, setRecruiterMode] = useState(false);
+  const [universeMode, setUniverseMode] = useState(false);
   const [identityPromptOpen, setIdentityPromptOpen] = useState(false);
   const enabled = useRef(false);
   const visibleSince = useRef(0);
@@ -122,13 +126,26 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     enabled: analyticsConfigured,
     stats,
     recruiterMode,
+    universeMode,
     identityPromptOpen,
     openRecruiterMode: () => {
+      setUniverseMode(false);
       setRecruiterMode(true);
       track("recruiter_mode_opened");
       if (getStored("session", "portfolio-identity-prompted") !== "1") setIdentityPromptOpen(true);
     },
     closeRecruiterMode: () => setRecruiterMode(false),
+    openUniverseMode: () => {
+      setRecruiterMode(false);
+      setIdentityPromptOpen(false);
+      track("universe_button_clicked");
+      setUniverseMode(true);
+      track("universe_launch");
+    },
+    closeUniverseMode: () => {
+      setUniverseMode(false);
+      track("universe_exit");
+    },
     requestIdentity: () => {
       if (getStored("session", "portfolio-identity-prompted") !== "1") setIdentityPromptOpen(true);
     },
@@ -143,7 +160,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
       await identifyAnalytics(identity);
     },
     track,
-  }), [identityPromptOpen, recruiterMode, stats, track]);
+  }), [identityPromptOpen, recruiterMode, stats, track, universeMode]);
 
   return <AnalyticsContext.Provider value={value}>{children}</AnalyticsContext.Provider>;
 }

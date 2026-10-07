@@ -41,6 +41,8 @@ export function Terminal() {
     "sudo hire lokesh": () => {
       track("contact_clicked", { channel: "email", source: "terminal" });
       requestIdentity();
+      // This is an external mailto handoff rather than an internal Next.js route.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
       window.location.href = `${portfolio.links.email}?subject=${encodeURIComponent("Let's work together")}`;
       return "Permission granted.\nOpening your email app...";
     },
@@ -63,7 +65,7 @@ export function Terminal() {
   }
 
   return (
-    <section className="section-shell content-section terminal-section">
+    <section className="section-shell content-section terminal-section" id="terminal">
       <SectionIntro
         index="06"
         eyebrow="INTERACTIVE TERMINAL"

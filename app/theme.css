@@ -43,6 +43,8 @@ html[data-theme="light"] .hero-proof strong { color:#103d50; }
 html[data-theme="light"] .hero-proof span,html[data-theme="light"] .hero-links a { color:#526b7c; }
 html[data-theme="light"] .scroll-cue { color:#006c87; text-shadow:0 0 16px rgba(0,108,135,.18); }
 html[data-theme="light"] .hero-stack span { color:#3d6073; background:#fff; border-color:#c8d9e2; }
+html[data-theme="light"] .topology-intro span { color:#006c87; text-shadow:0 0 14px rgba(0,108,135,.12); }
+html[data-theme="light"] .topology-intro p { color:#476779; }
 html[data-theme="light"] .button-primary { background:#006c87; color:#fff; box-shadow:0 8px 24px rgba(0,108,135,.16); }
 html[data-theme="light"] .button-primary:hover { background:#005570; }
 html[data-theme="light"] .button-ghost { background:#fff; color:#214458; }
@@ -51,10 +53,12 @@ html[data-theme="light"] .topology-card { background:linear-gradient(180deg,#fff
 html[data-theme="light"] .topology-card::before { background:radial-gradient(circle at 50% 45%,rgba(0,108,135,.05),transparent 42%); }
 html[data-theme="light"] .topology-card::after { border-color:rgba(39,105,132,.1); }
 html[data-theme="light"] .topology-status,html[data-theme="light"] .topology-foot { color:#537085; }
-html[data-theme="light"] .topology-line { stroke:rgba(41,93,116,.32); }
-html[data-theme="light"] .topology-line.active { stroke:rgba(0,108,135,.75); }
+html[data-theme="light"] .topology-line { stroke:rgba(35,91,116,.5); }
+html[data-theme="light"] .topology-line.active { stroke:rgba(0,108,135,.92); }
 html[data-theme="light"] .topology-node { color:#2d5368; background:#fff; border-color:#b9d1dd; box-shadow:0 6px 16px rgba(40,79,100,.1); }
+html[data-theme="light"] .topology-node::before { background:#fff; }
 html[data-theme="light"] .topology-node:hover,html[data-theme="light"] .topology-node.active { background:#eaf6fa; border-color:#0083a1; color:#173d51; }
+html[data-theme="light"] .topology-node:hover::before,html[data-theme="light"] .topology-node.active::before { background:#eaf6fa; }
 html[data-theme="light"] .node-index { color:#5d7787; }
 html[data-theme="light"] .node-tooltip { background:#fff; color:#294a5e; border-color:#bed5df; box-shadow:0 8px 20px rgba(34,76,96,.12); }
 
@@ -145,6 +149,8 @@ html[data-theme="light"] .footer strong { color:#173f54; }
 html[data-theme="light"] .footer-region { color:#4b6b7f; }
 html[data-theme="light"] .visitor-counter > span + span::before { color:#7895a5; }
 html[data-theme="light"] .recruiter-nav-button { color:#176b59; border-color:#9cc9bd; background:#f3fbf8; }
+html[data-theme="light"] .game-nav-button { color:#59479a; border-color:#c7bce8; background:linear-gradient(120deg,#f3fbfd,#f5f1ff); }
+html[data-theme="light"] .game-nav-button:hover { color:#3e2e7d; border-color:#8f7bc8; box-shadow:0 8px 22px rgba(89,71,154,.1); }
 html[data-theme="light"] .recruiter-mode { background:rgba(226,237,242,.9); }
 html[data-theme="light"] .recruiter-shell { background:linear-gradient(145deg,#fff,#eef5f8); border-color:#b8d3de; box-shadow:0 30px 100px rgba(35,78,100,.22); }
 html[data-theme="light"] .recruiter-head { background:rgba(255,255,255,.94); }
@@ -179,3 +185,200 @@ html[data-theme="light"] .resume-loader-steps li.active { background:#e7f4f8; co
 html[data-theme="light"] .resume-loader-steps li.complete { color:#1d715a; }
 html[data-theme="light"] .resume-loader-topline,html[data-theme="light"] .resume-loader-foot,html[data-theme="light"] .resume-loader-step-icon,html[data-theme="light"] .resume-loader-step-state { color:#557285; }
 html[data-theme="light"] .resume-loader-progress { background:#d7e7ee; }
+
+/* Interactive portfolio game */
+html[data-theme="light"] .universe-loading {
+  color:#006c87;
+  background:#eef5f8;
+}
+html[data-theme="light"] .universe-mode {
+  color-scheme:light;
+  color:#173b4e;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(0,108,135,.08),transparent 34rem),
+    linear-gradient(180deg,#f5f9fb,#e9f2f6);
+}
+html[data-theme="light"] .universe-stars {
+  opacity:.34;
+  filter:saturate(.72);
+}
+html[data-theme="light"] .universe-stars::after {
+  opacity:.24;
+  filter:drop-shadow(0 0 2px rgba(0,108,135,.24));
+}
+html[data-theme="light"] .universe-header {
+  border-color:#b9d3de;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 12px 34px rgba(35,78,100,.12);
+}
+html[data-theme="light"] .universe-kicker,
+html[data-theme="light"] .universe-online { color:#476b7f; }
+html[data-theme="light"] .universe-brand strong { color:#143f53; }
+html[data-theme="light"] .universe-exit {
+  color:#31586c;
+  border-color:#b7d1dc;
+  background:#f6fafc;
+}
+html[data-theme="light"] .universe-exit:hover {
+  color:#004f66;
+  border-color:#72aec0;
+  background:#e9f5f9;
+}
+html[data-theme="light"] .universe-map-panel,
+html[data-theme="light"] .universe-inspector {
+  border-color:#bfd6e0;
+  background:linear-gradient(150deg,rgba(255,255,255,.96),rgba(237,246,249,.96));
+  box-shadow:0 22px 68px rgba(35,78,100,.13);
+}
+html[data-theme="light"] .universe-map-head span { color:#557487; }
+html[data-theme="light"] .universe-map-head strong { color:#294f63; }
+html[data-theme="light"] .universe-map {
+  border-color:#bfd6e0;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(0,108,135,.11),transparent 26%),
+    linear-gradient(rgba(0,108,135,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,108,135,.045) 1px,transparent 1px),
+    rgba(244,249,251,.92);
+  background-size:auto,46px 46px,46px 46px,auto;
+}
+html[data-theme="light"] .universe-orbit { border-color:rgba(0,108,135,.2); }
+html[data-theme="light"] .orbit-two { border-color:rgba(89,71,154,.17); }
+html[data-theme="light"] .universe-destination { color:#365d71; }
+html[data-theme="light"] .destination-planet {
+  color:#006c87;
+  border-color:#84b8c8;
+  background:radial-gradient(circle at 35% 30%,#fff,#dcecf2 72%);
+  box-shadow:0 7px 20px rgba(35,78,100,.14);
+}
+html[data-theme="light"] .universe-destination:nth-of-type(even) .destination-planet {
+  color:#59479a;
+  border-color:#b7aade;
+  background:radial-gradient(circle at 35% 30%,#fff,#e7e1f6 72%);
+}
+html[data-theme="light"] .universe-destination:hover .destination-planet,
+html[data-theme="light"] .universe-destination.active .destination-planet {
+  border-color:#007e9d;
+  box-shadow:0 0 0 5px rgba(0,108,135,.08),0 9px 26px rgba(35,78,100,.18);
+}
+html[data-theme="light"] .universe-destination strong { color:#244b60; }
+html[data-theme="light"] .universe-destination small { color:#5b798c; }
+html[data-theme="light"] .universe-destination.active strong { color:#082f42; }
+html[data-theme="light"] .universe-ship {
+  color:#08755a;
+  border-color:#61a994;
+  background:rgba(235,250,245,.96);
+  box-shadow:0 0 18px rgba(36,143,112,.24),0 0 50px rgba(0,108,135,.1);
+}
+html[data-theme="light"] .universe-controls button {
+  color:#3c6074;
+  border-color:#bdd4de;
+  background:#fff;
+}
+html[data-theme="light"] .universe-controls button:hover,
+html[data-theme="light"] .universe-controls button:active {
+  color:#005d76;
+  border-color:#75afc0;
+  background:#e9f5f9;
+}
+html[data-theme="light"] .universe-inspector-head { color:#496c7f; text-shadow:none; }
+html[data-theme="light"] .universe-inspector h2 { color:#163d51; }
+html[data-theme="light"] .universe-inspector > p { color:#4c697b; }
+html[data-theme="light"] .universe-manifest {
+  border-color:#c7dce5;
+  background:#d8e7ed;
+}
+html[data-theme="light"] .universe-manifest > div { background:rgba(255,255,255,.96); }
+html[data-theme="light"] .universe-manifest strong { color:#254d61; }
+html[data-theme="light"] .universe-manifest span { color:#537285; }
+html[data-theme="light"] .universe-inline-action,
+html[data-theme="light"] .universe-impact > span { color:#006c87; }
+html[data-theme="light"] .universe-impact { border-color:#c8dce5; }
+html[data-theme="light"] .universe-impact > div { border-color:#c7dce5; background:rgba(255,255,255,.58); }
+html[data-theme="light"] .universe-impact p { border-color:#d3e2e9; }
+html[data-theme="light"] .universe-impact strong { color:#173f53; }
+html[data-theme="light"] .universe-impact small { color:#526f82; }
+html[data-theme="light"] .universe-missions button {
+  color:#31586c;
+  border-color:#bdd4de;
+  background:#fff;
+}
+html[data-theme="light"] .universe-missions button:hover {
+  color:#005d76;
+  border-color:#75afc0;
+  background:#edf7fa;
+}
+html[data-theme="light"] .game-hud {
+  border-color:#bfd6e0;
+  background:#d4e5ec;
+}
+html[data-theme="light"] .game-hud > div { background:rgba(255,255,255,.97); }
+html[data-theme="light"] .game-hud span { color:#4d6d80; text-shadow:none; }
+html[data-theme="light"] .game-hud strong { color:#173f53; }
+html[data-theme="light"] .game-hud .game-objective {
+  background:linear-gradient(110deg,rgba(0,108,135,.08),rgba(89,71,154,.06)),#fff;
+}
+html[data-theme="light"] .game-hud .game-objective strong { color:#006c87; }
+html[data-theme="light"] .universe-game-map::before { opacity:.22; }
+html[data-theme="light"] .game-core {
+  color:#784700;
+  border-color:#c68a32;
+  background:radial-gradient(circle at 34% 28%,#fff9e9 0 12%,#f1c875 48%,#be7923 100%);
+  box-shadow:0 0 0 5px rgba(181,113,30,.08),0 8px 22px rgba(103,71,31,.22);
+}
+html[data-theme="light"] .game-core::before { border-color:rgba(151,94,26,.34); }
+html[data-theme="light"] .game-core span {
+  color:#70420f;
+  text-shadow:0 1px 0 rgba(255,255,255,.9);
+}
+html[data-theme="light"] .game-hazard {
+  border-color:#718896;
+  background:radial-gradient(circle at 34% 28%,#dce6eb 0 10%,#9aabb5 42%,#607582 78%);
+  box-shadow:inset -5px -6px 12px rgba(48,67,78,.2),0 8px 20px rgba(45,69,82,.2);
+}
+html[data-theme="light"] .game-hazard::before,
+html[data-theme="light"] .game-hazard::after {
+  background:rgba(70,91,103,.48);
+  box-shadow:inset 1px 1px 3px rgba(34,52,62,.28);
+}
+html[data-theme="light"] .game-hazard span { border-color:rgba(76,100,113,.24); }
+html[data-theme="light"] .game-modal {
+  border-color:#9fc6d4;
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(235,245,249,.98));
+  box-shadow:0 28px 90px rgba(35,78,100,.24),0 0 70px rgba(0,108,135,.07);
+}
+html[data-theme="light"] .game-modal-icon {
+  color:#006c87;
+  border-color:#86bac9;
+  background:#e7f4f8;
+  box-shadow:0 8px 28px rgba(0,108,135,.14);
+}
+html[data-theme="light"] .game-modal h2 { color:#153e52; }
+html[data-theme="light"] .game-modal p { color:#48687a; }
+html[data-theme="light"] .game-modal > button,
+html[data-theme="light"] .result-actions button { color:#fff; background:#006c87; }
+html[data-theme="light"] .game-modal > button:hover,
+html[data-theme="light"] .result-actions button:hover { background:#00566d; }
+html[data-theme="light"] .game-key-guide span {
+  color:#31596d;
+  border-color:#c2d8e2;
+  background:#f8fbfc;
+}
+html[data-theme="light"] .game-key-guide b { color:#5b788a; }
+html[data-theme="light"] .result-score { color:#11745a; }
+html[data-theme="light"] .result-actions button:last-child {
+  color:#31586c;
+  border-color:#b7d1dc;
+  background:#fff;
+}
+html[data-theme="light"] .game-status {
+  border-color:#bfd6e0;
+  background:rgba(255,255,255,.94);
+}
+html[data-theme="light"] .game-status span,
+html[data-theme="light"] .game-status p { color:#3f6174; }
+html[data-theme="light"] .game-status small { color:#5e7d8f; }
+html[data-theme="light"] .game-controls .boost-control {
+  color:#59479a;
+  border-color:#b9adde;
+  background:#f4f0fc;
+}

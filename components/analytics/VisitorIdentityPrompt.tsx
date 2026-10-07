@@ -31,7 +31,7 @@ export function VisitorIdentityPrompt() {
       <strong>Welcome 👋</strong>
       <p>If you’re a recruiter or hiring manager, I’d love to know who stopped by.</p>
       <form onSubmit={submit}>
-        <label><span>Your name</span><input ref={nameInput} value={name} onChange={(event) => { setName(event.target.value); if (error) setError(""); }} maxLength={80} autoComplete="name" autoFocus aria-invalid={Boolean(error)} aria-describedby={error ? "identity-error" : undefined} /></label>
+        <label><span>Your name</span><input ref={nameInput} value={name} onChange={(event) => { setName(event.target.value); if (error) setError(""); }} maxLength={80} autoComplete="name" aria-invalid={Boolean(error)} aria-describedby={error ? "identity-error" : undefined} /></label>
         <label><span>Company</span><input value={company} onChange={(event) => { setCompany(event.target.value); if (error) setError(""); }} maxLength={120} autoComplete="organization" aria-invalid={Boolean(error)} aria-describedby={error ? "identity-error" : undefined} /></label>
         {error && <p className="identity-error" id="identity-error" role="alert">{error}</p>}
         <div><button className="button button-primary" type="submit">Continue</button><button className="identity-skip" type="button" onClick={dismissIdentity}>Skip</button></div>

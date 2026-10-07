@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownRight, FileText, Github, Linkedin, MoveRight, UserRoundSearch } from "lucide-react";
+import { ArrowDownRight, FileText, Github, Linkedin, MoveRight, Rocket, UserRoundSearch } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { HeroTopology } from "./HeroTopology";
@@ -8,7 +8,7 @@ import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
-  const { openRecruiterMode, requestIdentity, track } = useAnalytics();
+  const { openRecruiterMode, openUniverseMode, requestIdentity, track } = useAnalytics();
   return (
     <section className="hero section-shell" id="home" aria-labelledby="hero-title">
       <div className="hero-grid" />
@@ -29,7 +29,7 @@ export function Hero() {
           <p className="hero-substatement">{portfolio.identity.alternateStatements[0]}</p>
 
           <figure className="hero-philosophy philosophy-card">
-            <span className="philosophy-card-label">// ENGINEERING PHILOSOPHY</span>
+            <span className="philosophy-card-label">{"// ENGINEERING PHILOSOPHY"}</span>
             <blockquote>
               <span>I don&apos;t just use intelligent systems.</span>
               <span>I build, test, break, and improve them.</span>
@@ -52,8 +52,8 @@ export function Hero() {
             <a className="button button-primary" href="#overview" data-cursor="EXECUTE">
               Explore My System <MoveRight size={17} />
             </a>
-            <a className="button button-ghost" href="#projects" data-cursor="OPEN">View Engineering Work</a>
             <button className="button button-ghost recruiter-hero-button" type="button" onClick={openRecruiterMode} data-cursor="OPEN"><UserRoundSearch size={16} /> Recruiter Mode</button>
+            <button className="button button-ghost universe-hero-button" type="button" onClick={openUniverseMode} data-cursor="LAUNCH" aria-label="Play a game and discover more about Lokesh"><Rocket size={16} /> Play My Universe</button>
           </div>
           <div className="hero-links" aria-label="Profile links">
             <a
@@ -69,6 +69,10 @@ export function Hero() {
         </motion.div>
       </div>
       <div className="hero-viz-wrap">
+        <div className="topology-intro">
+          <span>{"// WELCOME TO MY WORLD"}</span>
+          <p>This isn’t just a website, it’s a world I’ve built. Every system, project, interaction, and hidden detail is connected. Explore beyond the surface, follow the connections, play the game and discover everything I’ve created.</p>
+        </div>
         <HeroTopology />
       </div>
       <a className="scroll-cue" href="#overview" aria-label="Scroll to system overview">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { BootSequence } from "./BootSequence";
 import { Navigation } from "./Navigation";
@@ -18,9 +19,14 @@ import { Footer } from "./Footer";
 import { CommandPalette } from "./CommandPalette";
 import { CustomCursor } from "./CustomCursor";
 import { DebugOverlay } from "./DebugOverlay";
-import { AnalyticsProvider } from "./analytics/AnalyticsProvider";
+import { AnalyticsProvider, useAnalytics } from "./analytics/AnalyticsProvider";
 import { VisitorIdentityPrompt } from "./analytics/VisitorIdentityPrompt";
 import { RecruiterMode } from "./RecruiterMode";
+
+const UniverseMode = dynamic(() => import("./UniverseMode").then((module) => module.UniverseMode), {
+  ssr: false,
+  loading: () => <div className="universe-loading" role="status">CALIBRATING STAR MAP…</div>,
+});
 
 export function PortfolioExperience() {
   return <AnalyticsProvider><PortfolioShell /></AnalyticsProvider>;
@@ -28,6 +34,7 @@ export function PortfolioExperience() {
 
 function PortfolioShell() {
   const reduceMotion = useReducedMotion();
+  const { universeMode } = useAnalytics();
   const [booting, setBooting] = useState(true);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [debug, setDebug] = useState(false);
@@ -74,6 +81,7 @@ function PortfolioShell() {
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
       <DebugOverlay enabled={debug} />
       <RecruiterMode />
+      {universeMode && <UniverseMode />}
       <VisitorIdentityPrompt />
       <AnimatePresence>{booting && <BootSequence />}</AnimatePresence>
       <motion.div

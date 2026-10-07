@@ -4,14 +4,14 @@ import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
 const nodes = [
-  { id: "client", label: "CLIENT", x: 50, y: 8, detail: "Request origin" },
-  { id: "api", label: "API GATEWAY", x: 50, y: 26, detail: "Traffic entry + routing" },
-  { id: "bus", label: "EVENT BUS", x: 50, y: 44, detail: "Async workload coordination" },
-  { id: "kafka", label: "KAFKA", x: 25, y: 62, detail: "High-throughput event streaming" },
-  { id: "agent", label: "AI AGENT", x: 75, y: 62, detail: "Tool-augmented LLM workflows" },
-  { id: "spark", label: "SPARK", x: 25, y: 80, detail: "Distributed processing" },
-  { id: "eval", label: "EVALUATOR", x: 75, y: 80, detail: "Automated model validation" },
-  { id: "obs", label: "OBSERVABILITY", x: 50, y: 95, detail: "Metrics, traces, telemetry" },
+  { id: "client", label: "CLIENT", x: 50, y: 6, detail: "Request origin" },
+  { id: "api", label: "API GATEWAY", x: 50, y: 23, detail: "Traffic entry + routing" },
+  { id: "bus", label: "EVENT BUS", x: 50, y: 40, detail: "Async workload coordination" },
+  { id: "kafka", label: "KAFKA", x: 24, y: 58, detail: "High-throughput event streaming" },
+  { id: "agent", label: "AI AGENT", x: 76, y: 58, detail: "Tool-augmented LLM workflows" },
+  { id: "spark", label: "SPARK", x: 24, y: 75, detail: "Distributed processing" },
+  { id: "eval", label: "EVALUATOR", x: 76, y: 75, detail: "Automated model validation" },
+  { id: "obs", label: "OBSERVABILITY", x: 50, y: 92, detail: "Metrics, traces, telemetry" },
 ] as const;
 
 const links = [

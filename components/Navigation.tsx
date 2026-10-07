@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Command, Menu, Moon, Sun, UserRoundSearch, X } from "lucide-react";
+import { Command, Menu, Moon, Rocket, Sun, UserRoundSearch, X } from "lucide-react";
 import { portfolio } from "@/portfolio.config";
 import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
-  const { openRecruiterMode } = useAnalytics();
+  const { openRecruiterMode, openUniverseMode } = useAnalytics();
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("overview");
@@ -65,6 +65,9 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
         <button className="recruiter-nav-button" type="button" onClick={openRecruiterMode} aria-label="Open Recruiter Mode">
           <UserRoundSearch size={15} /><span>RECRUITER</span>
         </button>
+        <button className="game-nav-button" type="button" onClick={openUniverseMode} aria-label="Play the interactive portfolio game">
+          <Rocket size={15} /><span>GAME</span>
+        </button>
         <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label="Toggle light and dark theme" title="Toggle light and dark theme">
           <Sun className="theme-icon-light" size={15} aria-hidden="true" />
           <Moon className="theme-icon-dark" size={15} aria-hidden="true" />
@@ -80,7 +83,8 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
       </div>
       {open && (
         <div className="mobile-nav">
-          <button onClick={() => { setOpen(false); openRecruiterMode(); }}>👋 Recruiter Mode</button>
+          <button onClick={() => { setOpen(false); openRecruiterMode(); }}><UserRoundSearch size={14} /> Recruiter Mode</button>
+          <button onClick={() => { setOpen(false); openUniverseMode(); }}><Rocket size={14} /> Play My Portfolio</button>
           {portfolio.nav.map((item) => (
             <a key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</a>
           ))}

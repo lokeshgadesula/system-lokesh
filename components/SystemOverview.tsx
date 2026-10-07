@@ -8,7 +8,7 @@ import { SectionIntro } from "./SectionIntro";
 export function SystemOverview() {
   const [active, setActive] = useState(0);
   const reduceMotion = useReducedMotion();
-  const module = portfolio.modules[active];
+  const activeModule = portfolio.modules[active];
 
   return (
     <section id="overview" className="section-shell content-section">
@@ -40,24 +40,24 @@ export function SystemOverview() {
         </div>
         <div className="module-inspector" role="tabpanel">
           <div className="inspector-head">
-            <span className="eyebrow">MODULE / {module.id.toUpperCase()}</span>
+            <span className="eyebrow">MODULE / {activeModule.id.toUpperCase()}</span>
             <span className="status-chip"><i /> ACTIVE</span>
           </div>
           <motion.div
-            key={module.id}
+            key={activeModule.id}
             initial={reduceMotion ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             className="flow-strip"
           >
-            {module.flow.map((step, index) => (
+            {activeModule.flow.map((step, index) => (
               <div className="flow-step" key={step}>
                 <span>{step}</span>
-                {index < module.flow.length - 1 && <i aria-hidden="true" />}
+                {index < activeModule.flow.length - 1 && <i aria-hidden="true" />}
               </div>
             ))}
           </motion.div>
           <ul className="inspector-list">
-            {module.items.map((item) => <li key={item}>{item}</li>)}
+            {activeModule.items.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
       </div>

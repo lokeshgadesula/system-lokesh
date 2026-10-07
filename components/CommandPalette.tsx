@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Command, Search, TerminalSquare, X } from "lucide-react";
 import { portfolio } from "@/portfolio.config";
@@ -22,13 +22,15 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
   const commands = useMemo(() => [...portfolio.commandPalette, ...playful], []);
   const filtered = commands.filter(([label]) => label.toLowerCase().includes(query.toLowerCase()));
 
-  function navigate(href: string) {
+  const navigate = useCallback((href: string) => {
     onClose();
     requestAnimationFrame(() => document.querySelector(href)?.scrollIntoView({ behavior: "smooth" }));
-  }
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) {
+      // Reset transient search state when the externally controlled dialog closes.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery("");
       setActiveIndex(0);
       return;
@@ -50,9 +52,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose, filtered, activeIndex]);
-
-  useEffect(() => setActiveIndex(0), [query]);
+  }, [open, onClose, filtered, activeIndex, navigate]);
 
   return (
     <AnimatePresence>
@@ -68,7 +68,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
             aria-label="Command palette"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <div className="palette-input"><Search size={17} /><input autoFocus value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search system commands..." /><button onClick={onClose} aria-label="Close command palette"><X size={17} /></button></div>
+            <div className="palette-input"><Search size={17} /><input autoFocus value={query} onChange={(event) => { setQuery(event.target.value); setActiveIndex(0); }} placeholder="Search system commands..." /><button onClick={onClose} aria-label="Close command palette"><X size={17} /></button></div>
             <div className="palette-list">
               {filtered.map(([label, href], index) => (
                 <button

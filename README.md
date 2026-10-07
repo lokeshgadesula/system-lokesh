@@ -41,6 +41,7 @@ This portfolio transforms my professional background into an interactive enginee
 - Interactive project architecture explorer
 - Engineering impact metrics
 - Packet Router mini-game
+- Lazy-loaded Universe Mode with keyboard and touch navigation
 - Interactive system terminal
 - Keyboard command palette
 - Hidden commands and debug modes
@@ -74,7 +75,7 @@ The portfolio remains a static Next.js export. Optional analytics use Supabase t
 
 ### Events
 
-The client can record `page_view`, `session_started`, `section_viewed`, `project_viewed`, `resume_opened`, `resume_downloaded`, `recruiter_mode_opened`, `contact_clicked`, `github_clicked`, `linkedin_clicked`, `visitor_identified`, and `engaged_visitor`.
+The client can record `page_view`, `session_started`, `section_viewed`, `project_viewed`, `resume_opened`, `resume_downloaded`, `recruiter_mode_opened`, `universe_button_clicked`, `universe_launch`, `universe_exit`, `contact_clicked`, `github_clicked`, `linkedin_clicked`, `visitor_identified`, and `engaged_visitor`.
 
 No fingerprinting is used. A random session UUID is stored in `sessionStorage`; a simple returning-visitor flag is stored in `localStorage`. Referrer, UTM values, path, broad browser/device categories, event timestamps, and voluntarily submitted name/company values are collected. Both identity fields are optional. Do Not Track and obvious crawler user agents disable session tracking. No geolocation integration is configured; notifications report location as unavailable. Referrers retain only the origin, excluding paths and query strings.
 
@@ -85,10 +86,11 @@ Visible tabs send a heartbeat every 30 seconds. “LIVE” means a browser sessi
 ### Supabase setup
 
 1. Create a Supabase project and run [`supabase/migrations/202609240001_portfolio_analytics.sql`](supabase/migrations/202609240001_portfolio_analytics.sql) in the SQL editor of a new project. This is a transactional, one-time initial migration, not an upgrade script; it deliberately fails instead of overwriting existing tables.
-2. Create `.env.local` containing only `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Use the legacy anon JWT with this implementation (not an `sb_publishable_` key); keep function JWT verification enabled.
-3. After approval, deploy `supabase/functions/portfolio-notify` as a Supabase Edge Function, including both `index.ts` and `cors.ts`.
-4. Set custom server-only Edge Function secrets: `RESEND_API_KEY`, `PORTFOLIO_NOTIFICATION_EMAIL`, optional `PORTFOLIO_NOTIFICATION_FROM`, and `PORTFOLIO_ALLOWED_ORIGIN=https://imlokesh.me`. The function sends email through Resend and retains `PORTFOLIO_NOTIFICATION_WEBHOOK_URL` as an optional Slack-compatible fallback. Supabase automatically supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`; never copy the service-role key into frontend env files.
-5. Rebuild and deploy the static site so the two `NEXT_PUBLIC_` values are embedded at build time.
+2. Run [`supabase/migrations/202610060001_universe_analytics_events.sql`](supabase/migrations/202610060001_universe_analytics_events.sql) to allow the three Universe Mode events. Existing projects only need this additive migration.
+3. Create `.env.local` containing only `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Use the legacy anon JWT with this implementation (not an `sb_publishable_` key); keep function JWT verification enabled.
+4. After approval, deploy `supabase/functions/portfolio-notify` as a Supabase Edge Function, including both `index.ts` and `cors.ts`.
+5. Set custom server-only Edge Function secrets: `RESEND_API_KEY`, `PORTFOLIO_NOTIFICATION_EMAIL`, optional `PORTFOLIO_NOTIFICATION_FROM`, and `PORTFOLIO_ALLOWED_ORIGIN=https://imlokesh.me`. The function sends email through Resend and retains `PORTFOLIO_NOTIFICATION_WEBHOOK_URL` as an optional Slack-compatible fallback. Supabase automatically supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`; never copy the service-role key into frontend env files.
+6. Rebuild and deploy the static site so the two `NEXT_PUBLIC_` values are embedded at build time.
 
 The notification function sends email through Resend when `RESEND_API_KEY` and `PORTFOLIO_NOTIFICATION_EMAIL` are configured. A Slack-compatible webhook remains available as an optional fallback. All provider credentials remain in Edge Function environment variables.
 

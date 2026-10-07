@@ -4,6 +4,7 @@ const highIntentEvents = new Set<AnalyticsEvent>([
   "resume_opened",
   "resume_downloaded",
   "recruiter_mode_opened",
+  "universe_launch",
   "contact_clicked",
 ]);
 

@@ -1,19 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Download, FileText, Github, Linkedin, Mail, MoveUpRight, X } from "lucide-react";
 import { portfolio } from "@/portfolio.config";
 import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function RecruiterMode() {
   const { recruiterMode, closeRecruiterMode, requestIdentity, track } = useAnalytics();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!recruiterMode) return;
     const previous = document.body.style.overflow;
     const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") closeRecruiterMode(); };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
-    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", onKey); };
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }));
+    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", onKey); window.cancelAnimationFrame(focusFrame); };
   }, [closeRecruiterMode, recruiterMode]);
   if (!recruiterMode) return null;
 
@@ -22,7 +24,7 @@ export function RecruiterMode() {
       <div className="recruiter-shell">
         <header className="recruiter-head">
           <div><span className="eyebrow">RECRUITER MODE / HIRING BRIEF</span><strong>SYSTEM://LOKESH</strong></div>
-          <button className="recruiter-close" type="button" onClick={closeRecruiterMode} aria-label="Exit Recruiter Mode"><X size={16} /><span>Exit Recruiter Mode</span></button>
+          <button ref={closeButtonRef} className="recruiter-close" type="button" onClick={closeRecruiterMode} aria-label="Exit Recruiter Mode"><X size={16} /><span>Exit Recruiter Mode</span></button>
         </header>
 
         <main className="recruiter-content">
@@ -64,7 +66,7 @@ export function RecruiterMode() {
                 </article>
               ))}
               <figure className="recruiter-philosophy philosophy-card">
-                <span className="philosophy-card-label">// ENGINEERING PHILOSOPHY</span>
+                <span className="philosophy-card-label">{"// ENGINEERING PHILOSOPHY"}</span>
                 <blockquote>
                   <span>It always seems impossible until it&apos;s done.</span>
                 </blockquote>
