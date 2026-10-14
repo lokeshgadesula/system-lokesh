@@ -64,13 +64,23 @@ export function sendEvent(sessionId: string, event: AnalyticsEvent, path: string
   }, true);
 }
 
-export function submitIdentity(sessionId: string, identity: VisitorIdentity) {
-  return rpc<{ accepted: boolean }>("portfolio_identify_visitor", {
+export async function submitIdentity(sessionId: string, identity: VisitorIdentity) {
+  const result = await rpc<{ accepted: boolean }>("portfolio_identify_visitor", {
     p_session_id: sessionId,
     p_name: identity.name?.trim() || null,
     p_company: identity.company?.trim() || null,
     p_email: identity.email?.trim() || null,
     p_phone: identity.phone?.trim() || null,
+  }, true);
+  if (result) return result;
+
+  // Keep the currently deployed three-argument RPC working while the additive
+  // contact-field migration rolls out. Email and phone remain local until the
+  // five-argument function is available.
+  return rpc<{ accepted: boolean }>("portfolio_identify_visitor", {
+    p_session_id: sessionId,
+    p_name: identity.name?.trim() || null,
+    p_company: identity.company?.trim() || null,
   }, true);
 }
 

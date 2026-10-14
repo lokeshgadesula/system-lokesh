@@ -71,7 +71,7 @@ export function Hero() {
       <div className="hero-viz-wrap">
         <div className="topology-intro">
           <span>{"// WELCOME TO MY WORLD"}</span>
-          <p>This is a world I've created. Explore the systems, follow the connections, play the game, discover hidden surprises, and most importantly, enjoy the experience.</p>
+          <p>This is a world I&apos;ve created. Explore the systems, follow the connections, play the game, discover hidden surprises, and most importantly, enjoy the experience.</p>
         </div>
         <HeroTopology />
       </div>
