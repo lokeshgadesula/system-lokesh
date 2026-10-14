@@ -27,4 +27,6 @@ export type VisitorStats = {
 export type VisitorIdentity = {
   name?: string;
   company?: string;
+  email?: string;
+  phone?: string;
 };

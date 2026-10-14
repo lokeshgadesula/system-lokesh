@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ExternalLink, Github } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { SectionIntro } from "./SectionIntro";
 import { useAnalytics } from "./analytics/AnalyticsProvider";
@@ -45,12 +45,15 @@ export function ProjectLab() {
           </button>
         ))}
       </div>
-      <motion.article
-        key={project.id}
-        initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="project-console"
-      >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.article
+          key={project.id}
+          initial={reduceMotion ? false : { opacity: 0, y: 10, filter: "blur(3px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -7, filter: "blur(2px)" }}
+          transition={{ duration: reduceMotion ? 0 : 0.26, ease: [0.22, 1, 0.36, 1] }}
+          className="project-console"
+        >
         <div className="project-copy">
           <span className="eyebrow">PROJECT / {project.id.toUpperCase()}</span>
           <h3>{project.title}</h3>
@@ -62,9 +65,18 @@ export function ProjectLab() {
             <a href={project.github} target="_blank" rel="noreferrer" onClick={() => track("github_clicked", { source: "project", project: project.id })}><Github size={15} /> GitHub <ExternalLink size={13} /></a>
           </div>
         </div>
-        <div className="project-visual" data-cursor="TRACE">
-          {mode === "architecture" ? (
-            <div className="architecture-flow" aria-label={`${project.title} architecture`}>
+          <div className="project-visual" data-cursor="TRACE">
+            <AnimatePresence mode="wait" initial={false}>
+            {mode === "architecture" ? (
+              <motion.div
+                key="architecture"
+                className="project-visual-panel architecture-flow"
+                aria-label={`${project.title} architecture`}
+                initial={reduceMotion ? false : { opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -6 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              >
               {project.architecture.map((step, index) => (
                 <div className="architecture-step" key={step}>
                   <div className="architecture-node"><span>{String(index + 1).padStart(2, "0")}</span><strong>{step}</strong></div>
@@ -82,18 +94,27 @@ export function ProjectLab() {
                   )}
                 </div>
               ))}
-            </div>
-          ) : (
-            <div className="technical-notes">
-              <span className="eyebrow">PRODUCTION NOTES</span>
-              {project.technical.map((item, index) => (
-                <div key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></div>
-              ))}
-              <div className="technical-foot">DESIGN GOAL / RELIABLE UNDER REAL WORKLOADS</div>
-            </div>
-          )}
-        </div>
-      </motion.article>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="details"
+                className="project-visual-panel technical-notes"
+                initial={reduceMotion ? false : { opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -6 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              >
+                <span className="eyebrow">PRODUCTION NOTES</span>
+                {project.technical.map((item, index) => (
+                  <div key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></div>
+                ))}
+                <div className="technical-foot">DESIGN GOAL / RELIABLE UNDER REAL WORKLOADS</div>
+              </motion.div>
+            )}
+            </AnimatePresence>
+          </div>
+        </motion.article>
+      </AnimatePresence>
     </section>
   );
 }

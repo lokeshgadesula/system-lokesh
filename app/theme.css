@@ -169,7 +169,9 @@ html[data-theme="light"] .philosophy-card figcaption { color:#4d6c7f; }
 html[data-theme="light"] .recruiter-contact { background:linear-gradient(120deg,#f1faf7,#edf7fa); border-color:#a6cfc4; }
 html[data-theme="light"] .recruiter-contact a { color:#31586c; background:#fff; }
 html[data-theme="light"] .identity-prompt { background:linear-gradient(145deg,#fff,#edf6f9); border-color:#9fc7d5; box-shadow:0 22px 70px rgba(35,78,100,.2); }
+html[data-theme="light"] .recruiter-handshake-layer { background:rgba(224,236,241,.55); }
 html[data-theme="light"] .identity-prompt > strong { color:#183d50; }
+html[data-theme="light"] .identity-quote { color:#234f63; }
 html[data-theme="light"] .identity-prompt > p { color:#506c7c; }
 html[data-theme="light"] .identity-prompt label,html[data-theme="light"] .recruiter-panel small,html[data-theme="light"] .recruiter-projects small { color:#365a6e; }
 html[data-theme="light"] .identity-prompt input { background:#fff; color:#173b4e; border-color:#c6dbe4; }
@@ -386,3 +388,23 @@ html[data-theme="light"] .game-controls .boost-control {
   border-color:#b9adde;
   background:#f4f0fc;
 }
+
+html[data-theme="light"] .universe-inspector-content > p { color:#4c697b; }
+html[data-theme="light"] .universe-launch {
+  color:#173b4e;
+  background:radial-gradient(circle at 50% 44%,rgba(0,108,135,.11),transparent 24rem),#eef5f8;
+}
+html[data-theme="light"] .universe-launch::before { opacity:.22; filter:saturate(.72); }
+html[data-theme="light"] .universe-launch-card {
+  border-color:#a8ccd9;
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(235,245,249,.98));
+  box-shadow:0 28px 90px rgba(35,78,100,.2),0 0 60px rgba(0,108,135,.06);
+}
+html[data-theme="light"] .universe-launch-icon {
+  color:#006c87; border-color:#8bbdcb; background:#e7f4f8;
+  box-shadow:0 8px 28px rgba(0,108,135,.12);
+}
+html[data-theme="light"] .universe-launch-card > p { color:#48687a; }
+html[data-theme="light"] .universe-launch-progress { background:#d4e6ed; }
+html[data-theme="light"] .universe-launch-status { color:#527285; }
+html[data-theme="light"] .universe-launch-status span:last-child { color:#11745a; }

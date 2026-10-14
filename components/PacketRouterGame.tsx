@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { RotateCcw, Router, Trophy } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { SectionIntro } from "./SectionIntro";
 
 const workloads = [
@@ -38,6 +39,7 @@ export function PacketRouterGame() {
   const [message, setMessage] = useState("ROUTER READY");
   const [completed, setCompleted] = useState(false);
   const [locked, setLocked] = useState(false);
+  const reduceMotion = useReducedMotion();
   const workload = workloads[index];
   const achievement = useMemo(() => {
     if (!completed) return "";
@@ -82,8 +84,16 @@ export function PacketRouterGame() {
             <div><Router size={18} /><span>WORKLOAD ROUTER / SESSION {String(index + 1).padStart(2, "0")}</span></div>
             <strong>{score} / {workloads.length}</strong>
           </div>
-          {!completed ? (
-            <>
+          <AnimatePresence mode="wait" initial={false}>
+            {!completed ? (
+            <motion.div
+              key={`round-${index}`}
+              className="router-round"
+              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -7 }}
+              transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+            >
               <div className="workload-card">
                 <span className="eyebrow">INCOMING REQUEST</span>
                 <h3>{workload.name}</h3>
@@ -96,20 +106,28 @@ export function PacketRouterGame() {
                   </button>
                 ))}
               </div>
-            </>
+            </motion.div>
           ) : (
-            <div className="game-complete">
+            <motion.div
+              key="complete"
+              className="game-complete"
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.975 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.985 }}
+              transition={{ duration: reduceMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
+            >
               <Trophy size={30} />
               <span className="eyebrow">ACHIEVEMENT UNLOCKED</span>
               <h3>{achievement}</h3>
               <p>{score} correct routes across {attempts} attempts.</p>
               <button className="button button-primary" onClick={reset}><RotateCcw size={15} /> Run again</button>
-            </div>
+            </motion.div>
           )}
+          </AnimatePresence>
         </div>
         <aside className="game-telemetry">
           <span className="eyebrow">LIVE TELEMETRY</span>
-          <div><span>STATUS</span><strong className={message.includes("BOTTLENECK") ? "warn" : "online"}>{message}</strong></div>
+          <div><span>STATUS</span><AnimatePresence mode="wait" initial={false}><motion.strong key={message} className={message.includes("BOTTLENECK") ? "warn" : "online"} initial={reduceMotion ? false : { opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -3 }} transition={{ duration: reduceMotion ? 0 : 0.16 }}>{message}</motion.strong></AnimatePresence></div>
           <div><span>THROUGHPUT</span><strong>{score}</strong></div>
           <div><span>ATTEMPTS</span><strong>{attempts}</strong></div>
           <div><span>HEALTH</span><strong>{Math.max(0, 100 - Math.max(0, attempts - score) * 15)}%</strong></div>

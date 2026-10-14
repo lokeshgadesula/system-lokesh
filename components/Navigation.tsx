@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Command, Menu, Moon, Rocket, Sun, UserRoundSearch, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { useAnalytics } from "./analytics/AnalyticsProvider";
 
@@ -10,6 +11,8 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("overview");
+  const themeTimer = useRef<number | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setCompact(window.scrollY > 50);
@@ -37,9 +40,19 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
   function toggleTheme() {
     const root = document.documentElement;
     const next = root.dataset.theme === "light" ? "dark" : "light";
+    if (!reduceMotion) {
+      root.classList.add("theme-transitioning");
+      if (themeTimer.current) window.clearTimeout(themeTimer.current);
+      themeTimer.current = window.setTimeout(() => root.classList.remove("theme-transitioning"), 420);
+    }
     root.dataset.theme = next;
     try { window.localStorage.setItem("portfolio-theme", next); } catch { /* Storage may be unavailable. */ }
   }
+
+  useEffect(() => () => {
+    if (themeTimer.current) window.clearTimeout(themeTimer.current);
+    document.documentElement.classList.remove("theme-transitioning");
+  }, []);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-color-scheme: light)");
@@ -81,16 +94,24 @@ export function Navigation({ onOpenPalette }: { onOpenPalette: () => void }) {
           {open ? <X /> : <Menu />}
         </button>
       </div>
-      {open && (
-        <div className="mobile-nav">
+      <AnimatePresence initial={false}>
+        {open && (
+        <motion.div
+          className="mobile-nav"
+          initial={reduceMotion ? false : { opacity: 0, y: -8, scale: 0.985 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -6, scale: 0.99 }}
+          transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
           <button onClick={() => { setOpen(false); openRecruiterMode(); }}><UserRoundSearch size={14} /> Recruiter Mode</button>
           <button onClick={() => { setOpen(false); openUniverseMode(); }}><Rocket size={14} /> Play My Portfolio</button>
           {portfolio.nav.map((item) => (
             <a key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</a>
           ))}
           <button onClick={() => { setOpen(false); onOpenPalette(); }}>Command palette</button>
-        </div>
-      )}
+        </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

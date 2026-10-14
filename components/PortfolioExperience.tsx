@@ -22,6 +22,7 @@ import { DebugOverlay } from "./DebugOverlay";
 import { AnalyticsProvider, useAnalytics } from "./analytics/AnalyticsProvider";
 import { VisitorIdentityPrompt } from "./analytics/VisitorIdentityPrompt";
 import { RecruiterMode } from "./RecruiterMode";
+import { UniverseLaunch } from "./UniverseLaunch";
 
 const UniverseMode = dynamic(() => import("./UniverseMode").then((module) => module.UniverseMode), {
   ssr: false,
@@ -34,7 +35,7 @@ export function PortfolioExperience() {
 
 function PortfolioShell() {
   const reduceMotion = useReducedMotion();
-  const { universeMode } = useAnalytics();
+  const { recruiterMode, universeLaunching, universeMode } = useAnalytics();
   const [booting, setBooting] = useState(true);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [debug, setDebug] = useState(false);
@@ -80,8 +81,9 @@ function PortfolioShell() {
       <CustomCursor />
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
       <DebugOverlay enabled={debug} />
-      <RecruiterMode />
-      {universeMode && <UniverseMode />}
+      <AnimatePresence>{recruiterMode && <RecruiterMode />}</AnimatePresence>
+      <AnimatePresence>{universeLaunching && <UniverseLaunch />}</AnimatePresence>
+      <AnimatePresence>{universeMode && <UniverseMode />}</AnimatePresence>
       <VisitorIdentityPrompt />
       <AnimatePresence>{booting && <BootSequence />}</AnimatePresence>
       <motion.div

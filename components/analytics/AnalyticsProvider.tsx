@@ -11,6 +11,7 @@ type AnalyticsContextValue = {
   stats: VisitorStats;
   recruiterMode: boolean;
   universeMode: boolean;
+  universeLaunching: boolean;
   identityPromptOpen: boolean;
   openRecruiterMode: () => void;
   closeRecruiterMode: () => void;
@@ -29,6 +30,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<VisitorStats>(emptyStats);
   const [recruiterMode, setRecruiterMode] = useState(false);
   const [universeMode, setUniverseMode] = useState(false);
+  const [universeLaunching, setUniverseLaunching] = useState(false);
   const [identityPromptOpen, setIdentityPromptOpen] = useState(false);
   const enabled = useRef(false);
   const visibleSince = useRef(0);
@@ -36,6 +38,11 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const sections = useRef(new Set<string>());
   const highIntent = useRef(false);
   const engagementSent = useRef(false);
+  const universeLaunchTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (universeLaunchTimer.current) window.clearTimeout(universeLaunchTimer.current);
+  }, []);
 
   const evaluateEngagement = useCallback(async () => {
     if (!enabled.current || engagementSent.current) return;
@@ -127,22 +134,38 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     stats,
     recruiterMode,
     universeMode,
+    universeLaunching,
     identityPromptOpen,
     openRecruiterMode: () => {
+      if (universeLaunchTimer.current) window.clearTimeout(universeLaunchTimer.current);
+      universeLaunchTimer.current = null;
+      setUniverseLaunching(false);
       setUniverseMode(false);
       setRecruiterMode(true);
       track("recruiter_mode_opened");
       if (getStored("session", "portfolio-identity-prompted") !== "1") setIdentityPromptOpen(true);
     },
-    closeRecruiterMode: () => setRecruiterMode(false),
+    closeRecruiterMode: () => {
+      setRecruiterMode(false);
+      setIdentityPromptOpen(false);
+    },
     openUniverseMode: () => {
+      if (universeLaunchTimer.current || universeMode) return;
       setRecruiterMode(false);
       setIdentityPromptOpen(false);
       track("universe_button_clicked");
-      setUniverseMode(true);
-      track("universe_launch");
+      setUniverseLaunching(true);
+      universeLaunchTimer.current = window.setTimeout(() => {
+        universeLaunchTimer.current = null;
+        setUniverseLaunching(false);
+        setUniverseMode(true);
+        track("universe_launch");
+      }, 3500);
     },
     closeUniverseMode: () => {
+      if (universeLaunchTimer.current) window.clearTimeout(universeLaunchTimer.current);
+      universeLaunchTimer.current = null;
+      setUniverseLaunching(false);
       setUniverseMode(false);
       track("universe_exit");
     },
@@ -160,7 +183,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
       await identifyAnalytics(identity);
     },
     track,
-  }), [identityPromptOpen, recruiterMode, stats, track, universeMode]);
+  }), [identityPromptOpen, recruiterMode, stats, track, universeLaunching, universeMode]);
 
   return <AnalyticsContext.Provider value={value}>{children}</AnalyticsContext.Provider>;
 }

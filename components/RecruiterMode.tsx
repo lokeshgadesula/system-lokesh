@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { Download, FileText, Github, Linkedin, Mail, MoveUpRight, X } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { useAnalytics } from "./analytics/AnalyticsProvider";
 
 export function RecruiterMode() {
-  const { recruiterMode, closeRecruiterMode, requestIdentity, track } = useAnalytics();
+  const { recruiterMode, identityPromptOpen, closeRecruiterMode, requestIdentity, track } = useAnalytics();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
   useEffect(() => {
     if (!recruiterMode) return;
     const previous = document.body.style.overflow;
@@ -20,8 +22,23 @@ export function RecruiterMode() {
   if (!recruiterMode) return null;
 
   return (
-    <div className="recruiter-mode" role="dialog" aria-modal="true" aria-labelledby="recruiter-title">
-      <div className="recruiter-shell">
+    <motion.div
+      className={`recruiter-mode ${identityPromptOpen ? "handshake-active" : ""}`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="recruiter-title"
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={reduceMotion ? { opacity: 0 } : { opacity: 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.28, ease: "easeOut" }}
+    >
+      <motion.div
+        className="recruiter-shell"
+        initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.99 }}
+        transition={{ duration: reduceMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] }}
+      >
         <header className="recruiter-head">
           <div><span className="eyebrow">RECRUITER MODE / HIRING BRIEF</span><strong>SYSTEM://LOKESH</strong></div>
           <button ref={closeButtonRef} className="recruiter-close" type="button" onClick={closeRecruiterMode} aria-label="Exit Recruiter Mode"><X size={16} /><span>Exit Recruiter Mode</span></button>
@@ -94,7 +111,7 @@ export function RecruiterMode() {
             </div>
           </section>
         </main>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

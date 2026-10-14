@@ -6,6 +6,7 @@ import {
   Crosshair, Database, Gem, GraduationCap, Mail, Rocket, RotateCcw, Satellite,
   Shield, Sparkles, Trophy, UserRoundSearch, X, Zap,
 } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { useAnalytics } from "./analytics/AnalyticsProvider";
 
@@ -37,6 +38,7 @@ const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 
 export function UniverseMode() {
   const { closeUniverseMode, openRecruiterMode, track } = useAnalytics();
+  const reduceMotion = useReducedMotion();
   const exitButtonRef = useRef<HTMLButtonElement>(null);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
@@ -215,9 +217,24 @@ export function UniverseMode() {
   const openTerminal = () => { closeUniverseMode(); window.setTimeout(() => document.getElementById("terminal")?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
 
   return (
-    <div className="universe-mode" role="dialog" aria-modal="true" aria-labelledby="universe-title">
+    <motion.div
+      className="universe-mode"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="universe-title"
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.28 }}
+    >
       <div className="universe-stars" aria-hidden="true" />
-      <div className="universe-shell">
+      <motion.div
+        className="universe-shell"
+        initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.992 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 8, scale: 0.995 }}
+        transition={{ duration: reduceMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] }}
+      >
         <header className="universe-header">
           <div className="universe-brand"><span className="universe-kicker"><i /> PLAY / EXPLORE / DISCOVER</span><strong id="universe-title">LOKESH QUEST: PLAY MY PORTFOLIO</strong></div>
           <div className="universe-header-actions"><span className="universe-online"><i /> GAME ENGINE ONLINE</span><button ref={exitButtonRef} className="universe-exit" type="button" onClick={closeUniverseMode} aria-label="Exit Universe"><X size={16} aria-hidden="true" /> <span>Exit Game</span></button></div>
@@ -260,15 +277,26 @@ export function UniverseMode() {
           </section>
 
           <aside className="universe-inspector" aria-live="polite">
-            <div className="universe-inspector-head"><span>SHIP DATABASE / {visited.includes(selected) ? "DOCKED DATA" : "REMOTE SCAN"}</span><i /></div><h2>{selectedContent.title}</h2><p>{selectedContent.intro}</p>
-            <div className="universe-manifest">{selectedContent.rows.map((row) => <div key={`${row.title}-${row.detail ?? ""}`}><strong>{row.title}</strong>{row.detail && <span>{row.detail}</span>}</div>)}</div>
-            {selected === "education" && <a className="universe-inline-action" href={portfolio.links.resumeTerminal} target="_blank" rel="noopener noreferrer" onClick={() => track("resume_opened", { source: "universe" })}>Open résumé log</a>}
-            {selected === "contact" && <a className="universe-inline-action" href={portfolio.links.email} onClick={() => track("contact_clicked", { channel: "email", source: "universe" })}>Open email channel</a>}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={selected}
+                className="universe-inspector-content"
+                initial={reduceMotion ? false : { opacity: 0, x: 9, filter: "blur(3px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -7, filter: "blur(2px)" }}
+                transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="universe-inspector-head"><span>SHIP DATABASE / {visited.includes(selected) ? "DOCKED DATA" : "REMOTE SCAN"}</span><i /></div><h2>{selectedContent.title}</h2><p>{selectedContent.intro}</p>
+                <div className="universe-manifest">{selectedContent.rows.map((row) => <div key={`${row.title}-${row.detail ?? ""}`}><strong>{row.title}</strong>{row.detail && <span>{row.detail}</span>}</div>)}</div>
+                {selected === "education" && <a className="universe-inline-action" href={portfolio.links.resumeTerminal} target="_blank" rel="noopener noreferrer" onClick={() => track("resume_opened", { source: "universe" })}>Open résumé log</a>}
+                {selected === "contact" && <a className="universe-inline-action" href={portfolio.links.email} onClick={() => track("contact_clicked", { channel: "email", source: "universe" })}>Open email channel</a>}
+              </motion.div>
+            </AnimatePresence>
             <section className="universe-impact" aria-label="Engineering impact telemetry"><span>{"// ENGINEERING IMPACT"}</span><div>{portfolio.identity.proof.map((item) => <p key={item.label}><strong>{item.value}</strong><small>{item.label}</small></p>)}</div></section>
             <div className="universe-missions"><button type="button" onClick={openRecruiterMode}><UserRoundSearch size={15} /> Recruiter Mission</button><button type="button" onClick={openTerminal}><Code2 size={15} /> Terminal Relay</button></div>
           </aside>
         </main>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

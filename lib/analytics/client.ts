@@ -69,6 +69,8 @@ export function submitIdentity(sessionId: string, identity: VisitorIdentity) {
     p_session_id: sessionId,
     p_name: identity.name?.trim() || null,
     p_company: identity.company?.trim() || null,
+    p_email: identity.email?.trim() || null,
+    p_phone: identity.phone?.trim() || null,
   }, true);
 }
 

@@ -70,7 +70,7 @@ Deno.serve(async (request: Request) => {
     const [{data:session,error:sessionError},{data:events,error:eventsError},{data:identity,error:identityError}] = await Promise.all([
       client.from("portfolio_sessions").select("started_at,last_seen_at,referrer,utm_source,returning_session").eq("id",body.sessionId).maybeSingle(),
       client.from("portfolio_events").select("event_type").eq("session_id",body.sessionId).order("created_at",{ascending:true}).limit(120),
-      client.from("portfolio_visitor_identity").select("name,company").eq("session_id",body.sessionId).maybeSingle(),
+      client.from("portfolio_visitor_identity").select("name,company,email,phone").eq("session_id",body.sessionId).maybeSingle(),
     ]);
     if (sessionError || eventsError || identityError) return reply({delivered:false},503);
     if (!session) return reply({delivered:false});
@@ -81,7 +81,7 @@ Deno.serve(async (request: Request) => {
     const identified = kind === "identity";
     let details = identity;
     if (identified && !details) {
-      const result = await client.from("portfolio_visitor_identity").select("name,company").eq("session_id",body.sessionId).single();
+      const result = await client.from("portfolio_visitor_identity").select("name,company,email,phone").eq("session_id",body.sessionId).single();
       if (result.error) return reply({delivered:false},503);
       details = result.data;
     }
@@ -92,6 +92,8 @@ Deno.serve(async (request: Request) => {
       lines:[
         ...(identified && details?.name ? [`Name: ${plain(details.name)}`] : []),
         ...(identified && details?.company ? [`Company: ${plain(details.company)}`] : []),
+        ...(emailConfigured && identified && details?.email ? [`Email: ${plain(details.email)}`] : []),
+        ...(emailConfigured && identified && details?.phone ? [`Phone: ${plain(details.phone)}`] : []),
         `Source: ${plain(session.utm_source || session.referrer || "Direct")}`,
         "Approx. Location: Unavailable", // No trusted geolocation integration is configured.
         `Activity: ${[...new Set(eventNames)].join(" → ")}`,

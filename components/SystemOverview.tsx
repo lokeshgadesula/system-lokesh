@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { SectionIntro } from "./SectionIntro";
 
@@ -43,22 +43,28 @@ export function SystemOverview() {
             <span className="eyebrow">MODULE / {activeModule.id.toUpperCase()}</span>
             <span className="status-chip"><i /> ACTIVE</span>
           </div>
-          <motion.div
-            key={activeModule.id}
-            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flow-strip"
-          >
-            {activeModule.flow.map((step, index) => (
-              <div className="flow-step" key={step}>
-                <span>{step}</span>
-                {index < activeModule.flow.length - 1 && <i aria-hidden="true" />}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeModule.id}
+              className="module-inspector-content"
+              initial={reduceMotion ? false : { opacity: 0, y: 9, filter: "blur(3px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -6, filter: "blur(2px)" }}
+              transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="flow-strip">
+                {activeModule.flow.map((step, index) => (
+                  <div className="flow-step" key={step}>
+                    <span>{step}</span>
+                    {index < activeModule.flow.length - 1 && <i aria-hidden="true" />}
+                  </div>
+                ))}
               </div>
-            ))}
-          </motion.div>
-          <ul className="inspector-list">
-            {activeModule.items.map((item) => <li key={item}>{item}</li>)}
-          </ul>
+              <ul className="inspector-list">
+                {activeModule.items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

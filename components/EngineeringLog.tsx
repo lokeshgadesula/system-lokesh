@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { portfolio } from "@/portfolio.config";
 import { SectionIntro } from "./SectionIntro";
 
@@ -36,29 +36,33 @@ export function EngineeringLog() {
             </button>
           ))}
         </div>
-        <motion.article
-          key={current.build}
-          className="build-detail"
-          initial={reduceMotion ? false : { opacity: 0, x: 12 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
-          <div className="build-detail-head">
-            <div>
-              <span className="eyebrow">DEPLOYMENT / {current.build}</span>
-              <h3>{current.role}</h3>
-              <p>{current.company} · {current.dates}</p>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.article
+            key={current.build}
+            className="build-detail"
+            initial={reduceMotion ? false : { opacity: 0, x: 14, filter: "blur(3px)" }}
+            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, x: -10, filter: "blur(2px)" }}
+            transition={{ duration: reduceMotion ? 0 : 0.26, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="build-detail-head">
+              <div>
+                <span className="eyebrow">DEPLOYMENT / {current.build}</span>
+                <h3>{current.role}</h3>
+                <p>{current.company} · {current.dates}</p>
+              </div>
+              <span className="status-chip"><i /> DEPLOYED</span>
             </div>
-            <span className="status-chip"><i /> DEPLOYED</span>
-          </div>
-          <ol className="achievement-list">
-            {current.achievements.map((item, index) => (
-              <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
-            ))}
-          </ol>
-          <div className="tag-row" aria-label="Technologies used">
-            {current.technologies.map((tech) => <span key={tech}>{tech}</span>)}
-          </div>
-        </motion.article>
+            <ol className="achievement-list">
+              {current.achievements.map((item, index) => (
+                <li key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></li>
+              ))}
+            </ol>
+            <div className="tag-row" aria-label="Technologies used">
+              {current.technologies.map((tech) => <span key={tech}>{tech}</span>)}
+            </div>
+          </motion.article>
+        </AnimatePresence>
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
         >
-          <p className="eyebrow hero-eyebrow"><span className="status-dot" /> SYSTEM://LOKESH / PRODUCTION ENGINEERING</p>
+          <p className="eyebrow hero-eyebrow"><span className="status-dot" /> SYSTEM://LOKESH</p>
           <h1 id="hero-title">
             <span>LOKESHPRASANTH</span>
             <span>GADESULA</span>
